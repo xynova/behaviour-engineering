@@ -1,0 +1,86 @@
+---
+alwaysApply: true
+---
+
+# Use Existing Go Setup - NO REBUILDING INFRASTRUCTURE
+
+## Table of Contents
+
+### **Core Sections**
+- [**Forbidden Actions**](#-forbidden-actions) (Line 23)
+- [**Required Actions**](#-required-actions) (Line 30)
+  - Dependency Management Workflow (Line 37)
+- [**Existing Go Tools**](#️-existing-go-tools) (Line 43)
+- [**Go Workflow**](#-go-workflow) (Line 50)
+- [**Goal**](#-goal) (Line 58)
+- [**Remember**](#️-remember) (Line 61)
+- [**When Testing**](#-when-testing) (Line 68)
+- [**Example Correct Commands**](#-example-correct-commands) (Line 74)
+- [**Example Wrong Commands**](#️-example-wrong-commands) (Line 82)
+
+---
+
+## 🚫 FORBIDDEN ACTIONS:
+- **DO NOT** recreate Go module structure
+- **DO NOT** run `go mod init` on existing projects
+- **DO NOT** manually manage `go.mod` without understanding dependencies
+- **DO NOT** create redundant Makefile targets
+- **DO NOT** override existing Go tool configurations
+
+## ✅ REQUIRED ACTIONS:
+- **ALWAYS** use existing `go.mod` and `go.sum` files
+- **ALWAYS** use `go mod tidy` to clean dependencies
+- **ALWAYS** use `make build` and `make test` for builds and tests
+- **ALWAYS** use existing project structure and patterns
+- **ALWAYS** work within the current Go module setup
+
+### **Dependency Management Workflow:**
+1.  **Add dependencies**: Edit `go.mod` with proper require statements
+2.  **Clean up**: Run `go mod tidy` to update `go.sum` and clean unused dependencies
+3.  **Verify**: Run `go mod verify` to check dependency integrity
+4.  **Build**: Use `make build` or `go build ./...`
+
+## 🔧 EXISTING GO TOOLS:
+- **Makefile**: Contains all build and test commands (`make build`, `make test`, `make lint`)
+- **go.mod**: Existing Go module definition
+- **go.sum**: Dependency checksums
+- **golangci-lint**: For code quality checks
+- **gofmt/gofumpt**: For code formatting
+
+## 📋 GO WORKFLOW:
+1. **Check dependencies**: `go list -m all`
+2. **Tidy dependencies**: `go mod tidy`
+3. **Build**: `make build` or `go build ./...`
+4. **Test**: `make test` or `go test ./...`
+5. **Lint**: `make lint` or `golangci-lint run`
+6. **Fix code issues, don't rebuild infrastructure**
+
+## 🎯 GOAL:
+**Working Go software using current setup, not rebuilding from scratch.**
+
+## ⚠️ REMEMBER:
+- The user wants **working Go software**
+- The user wants you to use the **current Go module setup**
+- The user does **NOT** want module structure recreated
+- The user does **NOT** want dependency management overhaul
+- **FIX THE ACTUAL PROBLEMS, don't change the Go environment**
+
+## 🔍 WHEN TESTING:
+- Use `make test` or `go test ./...`
+- If tests fail, fix the test logic, not the test infrastructure
+- If dependencies missing, use `go mod tidy` and proper require statements
+- **NEVER** recreate Go modules or change import paths
+
+## 💡 EXAMPLE CORRECT COMMANDS:
+```bash
+go mod tidy
+make test
+go build ./...
+golangci-lint run
+```
+
+## ❌ EXAMPLE WRONG COMMANDS:
+```bash
+go mod init new_module  # NEVER DO THIS on existing project
+rm go.mod go.sum       # NEVER DELETE existing module files
+```

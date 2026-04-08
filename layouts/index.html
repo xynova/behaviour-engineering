@@ -1,0 +1,65 @@
+{{- define "content" -}}
+    {{- $params := .Scratch.Get "params" -}}
+    {{- $profile := .Site.Params.home.profile -}}
+    {{- $posts := .Site.Params.home.posts -}}
+
+    <div class="page home"{{ if ne $posts.enable false }} data-home="posts"{{ end }}>
+        {{- /* Profile */ -}}
+        {{- if ne $profile.enable false -}}
+            {{- partial "home/profile.html" . -}}
+        {{- end -}}
+
+        {{- /* Content */ -}}
+        {{- if .Content -}}
+            <div class="single">
+                <div class="content" id="content">
+                    {{- dict "Content" .Content "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+                </div>
+            </div>
+        {{- end -}}
+
+        {{- /* Posts — card tiles: latest per content section (contentSections), or legacy type "posts" + paginate */ -}}
+        {{- if ne $posts.enable false | and .Site.RegularPages -}}
+            {{- $secList := $posts.contentSections | default slice -}}
+            {{- if gt (len $secList) 0 -}}
+                {{- $.Scratch.Set "homeFeed" slice -}}
+                {{- range $secList -}}
+                    {{- $inSec := where site.RegularPages "Section" . -}}
+                    {{- if $.Site.Params.page.hiddenFromHomePage -}}
+                        {{- $inSec = where $inSec "Params.hiddenfromhomepage" false -}}
+                    {{- else -}}
+                        {{- $inSec = where $inSec "Params.hiddenfromhomepage" "!=" true -}}
+                    {{- end -}}
+                    {{- $sorted := sort $inSec "Date" "desc" -}}
+                    {{- with index $sorted 0 -}}
+                        {{- $.Scratch.Set "homeFeed" (($.Scratch.Get "homeFeed") | append .) -}}
+                    {{- end -}}
+                {{- end -}}
+                {{- $homePages := sort ($.Scratch.Get "homeFeed") "Date" "desc" -}}
+                <div class="home-post-grid">
+                    {{- range $homePages -}}
+                        {{- .Render "home-tile" -}}
+                    {{- end -}}
+                </div>
+            {{- else -}}
+                {{- $pages := where .Site.RegularPages "Type" "posts" -}}
+                {{- if .Site.Params.page.hiddenFromHomePage -}}
+                    {{- $pages = where $pages "Params.hiddenfromhomepage" false -}}
+                {{- else -}}
+                    {{- $pages = where $pages "Params.hiddenfromhomepage" "!=" true -}}
+                {{- end -}}
+                {{- with $posts.paginate | default .Site.Params.paginate -}}
+                    {{- $pages = $.Paginate $pages . -}}
+                {{- else -}}
+                    {{- $pages = .Paginate $pages -}}
+                {{- end -}}
+                <div class="home-post-grid">
+                    {{- range $pages.Pages -}}
+                        {{- .Render "home-tile" -}}
+                    {{- end -}}
+                </div>
+                {{- partial "paginator.html" . -}}
+            {{- end -}}
+        {{- end -}}
+    </div>
+{{- end -}}

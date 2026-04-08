@@ -1,0 +1,40 @@
+{{- $p := .Page -}}
+{{- $params := $p.Params | merge $p.Site.Params.page -}}
+{{- $image := $params.featuredimagepreview | default $params.featuredimage -}}
+{{- with $p.Resources.GetMatch "featured-image" -}}
+    {{- $image = .RelPermalink -}}
+{{- end -}}
+{{- with $p.Resources.GetMatch "featured-image-preview" -}}
+    {{- $image = .RelPermalink -}}
+{{- end -}}
+{{- $cat := $p.Section -}}
+{{- with $p.Params.categories -}}
+    {{- $cat = index . 0 -}}
+{{- end -}}
+<article class="seven-list__row" data-seven-row="{{ .RowIndex }}">
+    <div class="seven-list__main">
+        <div class="seven-list__meta">
+            <time datetime="{{ $p.PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ $p.Date.Format "2006/01/02" }}</time>
+            <span class="seven-list__dot" aria-hidden="true"></span>
+            <span class="seven-list__type">{{ $cat }}</span>
+        </div>
+        <a href="{{ $p.RelPermalink }}" class="seven-list__title">{{ $p.Title | emojify }}</a>
+        <div class="seven-list__figure">
+            {{- with $image -}}
+                {{- dict "Src" . "Title" $p.Title "Resources" $p.Resources "Class" "seven-list__img" | partial "plugin/img.html" -}}
+            {{- else -}}
+                <div class="seven-list__figure-placeholder" aria-hidden="true"></div>
+            {{- end -}}
+        </div>
+    </div>
+    <div class="seven-list__summary-col">
+        <p class="seven-list__summary-heading">{{ T "summary" }}</p>
+        <div class="seven-list__summary-text">
+            {{- with $p.Description -}}
+                <p>{{ . | plainify }}</p>
+            {{- else -}}
+                <p>{{ $p.Summary | plainify }}</p>
+            {{- end -}}
+        </div>
+    </div>
+</article>

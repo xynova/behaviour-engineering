@@ -1,0 +1,188 @@
+baseURL = 'https://behaviorengineering.ai/'
+languageCode = 'en'
+title = 'behaviorengineering.ai'
+theme = 'LoveIt'
+
+# whether to use robots.txt
+enableRobotsTXT = true
+
+# whether to use git commit log
+#enableGitInfo = true
+
+# whether to use emoji code
+enableEmoji = true
+
+
+# Pagination config
+[pagination]
+  disableAliases = false
+  pagerSize = 10
+  path = "page"
+
+[params]
+  dateFormat = "02-01-2006"
+  #defaultTheme = "light"
+  
+  # Header config
+  [params.header]
+    # desktop header mode ["fixed", "normal", "auto"]
+    desktopMode = "fixed"
+    # mobile header mode ["fixed", "normal", "auto"]
+    mobileMode = "auto"
+    # Header title config
+    [params.header.title]
+      # URL of the LOGO
+      logo = "/images/head.svg"
+      # Put "behaviour" in pre field (supports HTML)
+      pre = 'behaviour'
+      # Put "engineering.ai" in name field
+      name = "engineering.ai"
+      post = ""
+      # whether to use typeit animation for title name
+      typeit = false
+
+  # Search config
+  [params.search]
+    enable = true
+    # type of search engine ["lunr", "algolia"]
+    type = "lunr"
+    # max index length of the chunked content
+    contentLength = 4000
+    # placeholder of the search bar
+    placeholder = "Search..."
+    # max number of results length
+    maxResultLength = 10
+    # snippet length of the result
+    snippetLength = 30
+    # HTML tag name of the highlight part in results
+    highlightTag = "em"
+    # whether to use the absolute URL based on the baseURL in search index
+    absoluteURL = false
+    
+  [params.app]
+    svgFavicon = "/images/favicon.ico"
+
+  # Author config
+  #[params.author]
+  #  name = "caca"
+  #  email = ""
+  #  link = ""
+
+
+  # Footer config
+  [params.footer]
+    enable = true
+    # Custom content (HTML format is supported)
+    custom = ""
+    # whether to show Hugo and theme info
+    hugo = false
+    # whether to show copyright info
+    copyright = true
+    # whether to show the author
+    author = false
+    # site creation time
+    since = 2019
+    # ICP info only in China (HTML format is supported)
+    icp = ""
+    # license info (HTML format is supported)
+    license= '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+
+
+  # Home page config
+  [params.home]
+    # amount of RSS pages
+    rss = 10
+    [params.home.profile]
+      enable = false
+      # Gravatar Email for preferred avatar in home page
+      gravatarEmail = ""
+      # URL of avatar shown in home page
+      avatarURL = ""
+      # title shown in home page (HTML format is supported)
+      title = ""
+      # subtitle shown in home page (HTML format is supported)
+      subtitle = "welcome to the thing"
+      # whether to use typeit animation for subtitle
+      typeit = true
+      # whether to show social links
+      social = true
+      # disclaimer (HTML format is supported)
+      disclaimer = ""
+    [params.home.posts]
+      enable = true
+      # special amount of posts in each home posts page (legacy mode only; see contentSections)
+      paginate = 6
+      # Latest one post per section on the home feed. List top-level content sections only;
+      # omit static pages (e.g. "about"). If empty or unset, home feed uses type "posts" only (legacy).
+      contentSections = [
+        "cognitive-memetics",
+        "human-condition",
+        "mind-infrastructure",
+        "reality-protocols",
+      ]
+
+
+  # List (category or tag) page config
+  [params.list]
+    # special amount of posts in each list page
+    paginate = 20
+    # date format (month and day)
+    dateFormat = "01-02"
+    # amount of RSS pages
+    rss = 10
+
+
+# Menu config
+[menu]
+  [[menu.main]]
+    weight = 1
+    identifier = "mind-infrastructure"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Mind-Infrastructure"
+    url = "/mind-infrastructure/"
+    # title will be shown when you hover on this menu link
+    title = ""
+  [[menu.main]]
+    weight = 2
+    identifier = "reality-protocols"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Reality‑Protocols"
+    url = "/reality-protocols/"
+    # title will be shown when you hover on this menu link
+    title = ""
+  [[menu.main]]
+    weight = 3
+    identifier = "cognitive-memetics"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Cognitive-Memetics"
+    url = "/cognitive-memetics/"
+    # title will be shown when you hover on this menu link
+    title = ""
+  [[menu.main]]
+    weight = 4
+    identifier = "human-condition"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Human-Condition"
+    url = "/human-condition/"
+    # title will be shown when you hover on this menu link
+    title = ""    
+ [[menu.main]]
+    weight = 5
+    identifier = "about"
+    pre = ""
+    post = ""
+    name = "About"
+    url = "/about/"
+    title = ""

@@ -1,0 +1,34 @@
+{{- .Page.Scratch.SetInMap "this" "glide" true -}}
+{{- $scriptArr := (.Page.Scratch.Get "this").scriptArr | default slice -}}
+{{- $initScript := `// Initialize Glide.js carousels
+function initGlideCarousels() {
+    if (typeof Glide !== 'undefined') {
+        const carousels = document.querySelectorAll('.quote-carousel');
+        carousels.forEach(function(carousel) {
+            // Count the number of slides
+            const slides = carousel.querySelectorAll('.glide__slide');
+            const slideCount = slides.length;
+            
+            // Generate a random starting index
+            const randomStart = Math.floor(Math.random() * slideCount);
+            
+            new Glide(carousel, {
+                type: 'carousel',
+                startAt: randomStart,
+                autoplay: 10000,
+                animationDuration: 1000,
+                animationTimingFunc: 'ease',
+                perView: 1,
+                gap: 0,
+                hoverpause: true
+            }).mount();
+        });
+    } else {
+        // Retry if Glide isn't loaded yet
+        setTimeout(initGlideCarousels, 100);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initGlideCarousels);` -}}
+{{- $scriptArr | append $initScript | .Page.Scratch.SetInMap "this" "scriptArr" -}}
+

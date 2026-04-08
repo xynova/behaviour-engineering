@@ -1,4 +1,4 @@
-{{- /* LoveIt override: logo Src must use absURL so /images/... works on GitHub Pages PR previews (subpath baseURL). */ -}}
+{{- /* LoveIt override: logo path is root-relative; relURL respects baseURL (custom-domain previews use /pr-preview/..., not /repo/...). */ -}}
 {{- /* Desktop header */ -}}
 <header class="desktop" id="header-desktop">
     <div class="header-wrapper">
@@ -6,7 +6,7 @@
             <a href="{{ .Site.Home.RelPermalink }}" title="{{ .Site.Title }}">
                 {{- with .Site.Params.header.title -}}
                     {{- with .logo -}}
-                        {{- dict "Src" (. | absURL) "Class" "logo" | partial "plugin/img.html" -}}
+                        {{- dict "Src" ((strings.TrimPrefix "/" .) | relURL) "Class" "logo" | partial "plugin/img.html" -}}
                     {{- end -}}
                     {{- with .pre -}}
                         <span class="header-title-pre">{{ . | safeHTML }}</span>
@@ -93,7 +93,7 @@
                 <a href="{{ .Site.Home.RelPermalink }}" title="{{ .Site.Title }}">
                     {{- with .Site.Params.header.title -}}
                         {{- with .logo -}}
-                            {{- dict "Src" (. | absURL) "Class" "logo" | partial "plugin/img.html" -}}
+                            {{- dict "Src" ((strings.TrimPrefix "/" .) | relURL) "Class" "logo" | partial "plugin/img.html" -}}
                         {{- end -}}
                         {{- with .pre -}}
                             <span class="header-title-pre">{{ . | safeHTML }}</span>

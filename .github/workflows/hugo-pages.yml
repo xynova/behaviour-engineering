@@ -5,6 +5,10 @@
 #
 # Repository Pages setting must be: Build and deployment → Deploy from a branch → gh-pages / (root).
 # If you previously used "GitHub Actions" as the Pages source, switch to the branch above once this workflow is on the default branch.
+#
+# PR preview baseURL must use the same host as hugo.toml baseURL (custom domain). Project sites are served at the
+# domain root there, while *.github.io/<repo>/ includes an extra path segment — a github.io-only baseURL breaks CSS
+# and assets when opening previews at https://behaviorengineering.ai/pr-preview/pr-<n>/.
 name: Deploy Hugo site to Pages
 
 on:
@@ -70,7 +74,8 @@ jobs:
       pages: read
       pull-requests: write
     env:
-      PREVIEW_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}/
+      # Must match hugo.toml baseURL host; path is /pr-preview/pr-<n>/ on the custom domain (no /repo/ segment).
+      PREVIEW_BASE_URL: https://behaviorengineering.ai/pr-preview/pr-${{ github.event.number }}/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,6 +96,7 @@ jobs:
           source-dir: public
           preview-branch: gh-pages
           umbrella-dir: pr-preview
+          pages-base-url: https://behaviorengineering.ai
           action: auto
           # Requires `pages: read` on GITHUB_TOKEN; otherwise GET .../pages/builds returns an error object and the
           # action's jq wait step fails with "Cannot index string with string \"commit\"".

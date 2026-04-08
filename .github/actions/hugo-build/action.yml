@@ -24,10 +24,12 @@ runs:
 
     - name: Build
       shell: bash
+      env:
+        BASE_URL: ${{ inputs.base-url }}
       run: |
         set -euo pipefail
-        if [[ -n "${{ inputs.base-url }}" ]]; then
-          hugo --minify --gc --baseURL "${{ inputs.base-url }}"
+        if [[ -n "$BASE_URL" ]]; then
+          hugo --minify --gc --baseURL "$BASE_URL"
         else
           hugo --minify --gc
         fi

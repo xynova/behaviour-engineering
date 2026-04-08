@@ -23,6 +23,11 @@ on:
       - closed
   workflow_dispatch:
 
+# One in-flight run per PR (latest push wins). Production pushes do not cancel each other.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('{0}-pr-{1}', github.workflow, github.event.pull_request.number) || format('{0}-{1}', github.workflow, github.ref) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   HUGO_VERSION: "0.139.3"
   # Run JS-based actions on Node 24 (GitHub is deprecating Node 20 on runners; see GitHub changelog Sep 2025).
@@ -32,9 +37,6 @@ jobs:
   deploy:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    concurrency:
-      group: pages-production
-      cancel-in-progress: false
     permissions:
       contents: write
     environment:
@@ -63,9 +65,6 @@ jobs:
   preview:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    concurrency:
-      group: preview-${{ github.ref }}
-      cancel-in-progress: true
     permissions:
       contents: write
       pages: read

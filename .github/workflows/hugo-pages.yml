@@ -1,0 +1,99 @@
+# Build Hugo and deploy to the gh-pages branch.
+#
+# Preview: when *you* open or push commits to a PR (into main/master), this workflow builds and publishes
+# a temporary preview URL. It does not create PRs or open branches for you—it only reacts to PR events.
+#
+# Repository Pages setting must be: Build and deployment → Deploy from a branch → gh-pages / (root).
+# If you previously used "GitHub Actions" as the Pages source, switch to the branch above once this workflow is on the default branch.
+name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+  workflow_dispatch:
+
+env:
+  HUGO_VERSION: "0.139.3"
+  # Run JS-based actions on Node 24 (GitHub is deprecating Node 20 on runners; see GitHub changelog Sep 2025).
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages-production
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    environment:
+      name: github-pages
+      url: https://behaviorengineering.ai/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Hugo build
+        uses: ./.github/actions/hugo-build
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+
+      - name: Deploy production to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: public
+          clean-exclude: pr-preview
+          force: false
+
+  preview:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    concurrency:
+      group: preview-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: write
+      pages: read
+      pull-requests: write
+    env:
+      PREVIEW_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Hugo build
+        if: github.event.action != 'closed'
+        uses: ./.github/actions/hugo-build
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          base-url: ${{ env.PREVIEW_BASE_URL }}
+
+      - name: Deploy PR preview
+        uses: rossjrw/pr-preview-action@v1.8.1
+        with:
+          source-dir: public
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
+          # Requires `pages: read` on GITHUB_TOKEN; otherwise GET .../pages/builds returns an error object and the
+          # action's jq wait step fails with "Cannot index string with string \"commit\"".
+          wait-for-pages-deployment: true
+          comment: true

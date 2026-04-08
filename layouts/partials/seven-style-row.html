@@ -11,6 +11,10 @@
 {{- with $p.Params.categories -}}
     {{- $cat = index . 0 -}}
 {{- end -}}
+{{- $ariaTitle := $p.Title | plainify -}}
+{{- with $p.Params.heading_code -}}
+    {{- $ariaTitle = printf "%s: %s" . $ariaTitle -}}
+{{- end -}}
 <article class="seven-list__row" data-seven-row="{{ .RowIndex }}">
     <div class="seven-list__main">
         <div class="seven-list__meta">
@@ -18,23 +22,98 @@
             <span class="seven-list__dot" aria-hidden="true"></span>
             <span class="seven-list__type">{{ $cat }}</span>
         </div>
-        <a href="{{ $p.RelPermalink }}" class="seven-list__title">{{ $p.Title | emojify }}</a>
+        <a href="{{ $p.RelPermalink }}" class="seven-list__title">{{- partial "heading-title-markup.html" $p -}}</a>
         <div class="seven-list__figure">
             {{- with $image -}}
-                {{- dict "Src" . "Title" $p.Title "Resources" $p.Resources "Class" "seven-list__img" | partial "plugin/img.html" -}}
+                <a href="{{ $p.RelPermalink }}" class="seven-list__figure-link" aria-label="{{ printf `View full post: %s` ($ariaTitle | htmlEscape) }}">{{- /* list image links to single */ -}}
+                    {{- dict "Src" . "Title" $p.Title "Resources" $p.Resources "Class" "seven-list__img" | partial "plugin/img.html" -}}
+                </a>
             {{- else -}}
                 <div class="seven-list__figure-placeholder" aria-hidden="true"></div>
             {{- end -}}
         </div>
     </div>
-    <div class="seven-list__summary-col">
-        <p class="seven-list__summary-heading">{{ T "summary" }}</p>
-        <div class="seven-list__summary-text">
-            {{- with $p.Description -}}
-                <p>{{ . | plainify }}</p>
-            {{- else -}}
-                <p>{{ $p.Summary | plainify }}</p>
+    {{- $isPapers := eq $p.Type `papers` -}}
+    {{- $isRealityProtocols := eq $p.Section "reality-protocols" -}}
+    {{- $asideBlocks := or (eq $p.Type `sayings`) $isPapers $p.Params.tldr $p.Params.fluff -}}
+    <div class="seven-list__summary-col{{ if $asideBlocks }} seven-list__summary-col--sayings{{ end }}">
+        {{- if $isPapers -}}
+            {{- if or $p.Description $p.Summary -}}
+                <div class="seven-list__sayings-block">
+                    <p class="seven-list__sayings-label">
+                        {{- if $isRealityProtocols -}}
+                            <span aria-hidden="true">🎯</span> {{ T "protocolClaim" }}
+                        {{- else -}}
+                            <span aria-hidden="true">✔️</span> {{ T "tldr" }}
+                        {{- end -}}
+                    </p>
+                    <div class="seven-list__summary-text seven-list__summary-text--md">
+                        {{- if $p.Description -}}
+                            {{ $p.Description | markdownify }}
+                        {{- else -}}
+                            <p>{{ $p.Summary | plainify }}</p>
+                        {{- end -}}
+                    </div>
+                </div>
             {{- end -}}
-        </div>
+            {{- with $p.Params.paper -}}
+                <div class="seven-list__sayings-block">
+                    <p class="seven-list__sayings-label">
+                        {{- if $isRealityProtocols -}}
+                            <span aria-hidden="true">📑</span> {{ T "protocolSource" }}
+                        {{- else -}}
+                            <span aria-hidden="true">📄</span> {{ T "labelPaper" }}
+                        {{- end -}}
+                    </p>
+                    <div class="seven-list__summary-text seven-list__summary-text--md">
+                        {{ . | markdownify }}
+                    </div>
+                </div>
+            {{- end -}}
+            {{- with $p.Params.research -}}
+                <div class="seven-list__sayings-block">
+                    <p class="seven-list__sayings-label">
+                        {{- if $isRealityProtocols -}}
+                            <span aria-hidden="true">🔭</span> {{ T "protocolDepth" }}
+                        {{- else -}}
+                            <span aria-hidden="true">🔬</span> {{ T "labelResearch" }}
+                        {{- end -}}
+                    </p>
+                    <div class="seven-list__summary-text seven-list__summary-text--md">
+                        {{ . | markdownify }}
+                    </div>
+                </div>
+            {{- end -}}
+        {{- else if or $p.Params.tldr $p.Params.fluff -}}
+            {{- with $p.Params.tldr -}}
+                <div class="seven-list__sayings-block">
+                    <p class="seven-list__sayings-label"><span aria-hidden="true">✔️</span> {{ T "tldr" }}</p>
+                    {{- /* markdownify so **bold** and other light Markdown work; do not use plainify here */ -}}
+                    <div class="seven-list__summary-text seven-list__summary-text--md">
+                        {{ . | markdownify }}
+                    </div>
+                </div>
+            {{- end -}}
+            {{- with $p.Params.fluff -}}
+                <div class="seven-list__sayings-block">
+                    <p class="seven-list__sayings-label"><span aria-hidden="true">💬</span> {{ T "context" }}</p>
+                    <div class="seven-list__summary-text seven-list__summary-text--md">
+                        {{ . | markdownify }}
+                    </div>
+                </div>
+            {{- end -}}
+        {{- else -}}
+            <div class="seven-list__sayings-block">
+                {{- /* Same .seven-list__sayings-label typography as TLDR / Context (not the date-line meta chip). */ -}}
+                <p class="seven-list__sayings-label"><span aria-hidden="true">🎬</span> {{ T "teaser" }}</p>
+                <div class="seven-list__summary-text seven-list__summary-text--md">
+                    {{- if $p.Description -}}
+                        {{- $p.Description | markdownify -}}
+                    {{- else -}}
+                        <p>{{ $p.Summary | plainify }}</p>
+                    {{- end -}}
+                </div>
+            </div>
+        {{- end -}}
     </div>
 </article>

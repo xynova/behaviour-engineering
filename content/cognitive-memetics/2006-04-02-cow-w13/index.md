@@ -1,15 +1,17 @@
 ---
-date: '2025-12-01T01:02:57+11:00'
-title: 'Cow  Second Post'
-description: 'This is my first post with a main image'
+date: '2026-04-02T08:00:00+11:00'
+type: cows
+heading_code: W6
+title: Cube-Cows 🐮📈
+description: This week, our cube‑cows are **freaking out about AGI**, while the only one actually up for any work is still the **rubber duck**.
 draft: false
 
 resources:
   - name: "featured-image"
-    src: "main-image.png"
+    src: "agi.jpeg"
 
 tags: ["emoji","caca"]
-categories: ["Coworkers"]
+categories: ["Sayings"]
 
 ---
 

@@ -1,19 +1,19 @@
 ---
-date: '2026-01-03T08:00:00+11:00'
+date: '2026-04-03T08:00:00+11:00'
 title: How meanings sync 🔄
-type: papers
+type: claims
 description: |
   Real communication isn’t just about words; it’s about **shared context, practice, and experience**. We only truly **“sync”** meanings with others when we share **genuine time and experiences**, not through superficial activities. Without this, even **the same words** can mean different things to different people.
-paper: |
-  [**Epistemic companions**: shared reality development in close relationships](https://blogs.cuit.columbia.edu/mayarossignacmilon/files/2018/08/Rossignac-Milon_Higgins_2018_Shared-Reality.pdf) (Rossignac-Milon & Higgins, 2018).
+grounding: |
+  **Shared reality** is the sense that you and another person experience the world *the same way*, not only agreeing on facts, but feeling aligned on what is real and what matters. **Epistemic companions** are the close others you learn and think *with*; Rossignac-Milon & Higgins (**2018**) show how shared feelings, practices, and identity in those relationships build that alignment over time. Source: [*Epistemic companions*: shared reality development in close relationships](https://blogs.cuit.columbia.edu/mayarossignacmilon/files/2018/08/Rossignac-Milon_Higgins_2018_Shared-Reality.pdf) (PDF).
 draft: false
 
 resources:
   - name: "featured-image"
     src: "signal.jpeg"
 
-tags: ["emoji","caca"]
-categories: ["Coworkers"]
+tags: ["SameButDifferentWorlds", "DoYouHaveATribe", "GoBackToOfficeFad", "TimeThatCounts"]
+categories: ["Reality-Protocols"]
 
 ---
 

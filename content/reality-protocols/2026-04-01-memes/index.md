@@ -1,21 +1,23 @@
 ---
-date: '2026-01-03T08:00:00+11:00'
+date: '2026-04-01T08:00:00+11:00'
 title: MEMEs, as virtual agents
-type: papers
+type: claims
 description: |
-  **Claim:** Real communication is not just a matter of words—it depends on **shared context, practice, and lived experience**. We can only truly **synchronize our meanings** with others by sharing **real, genuine time together**, not through surface-level interactions. Without this foundation, even **identical words** can produce **completely different meanings** in different minds.
+  **Memes** are units of **cultural transmission**, **Dawkins's** analogue to **genes**, that hop from **brain to brain** by **imitation**. They can harden into **norms, identities, and shared fictions**, recruit **emotion and tribal defense**, and behave like **agents** in how people protect or spread them.
+grounding: |
+  The word **meme** was introduced in Richard Dawkins’ *The Selfish Gene* (**1976**) as a replicator of culture; the Greek root *mimema* (“that which is imitated”) is folded into a rhyme with *gene*. Overview: [Meme (Wikipedia)](https://en.wikipedia.org/wiki/Meme).
 draft: false
 
 resources:
   - name: "featured-image"
     src: "memes.jpeg"
 
-tags: ["emoji","caca"]
-categories: ["Coworkers"]
+tags: ["SharedIllusionsRunTheWorld", "IdeasBecomeIdentity", "TribeBeforeTruth"]
+categories: ["Reality-Protocols"]
 
 ---
 
-The word meme comes from evolutionary biologist Richard Dawkins in his 1976 book The Selfish Gene. He built it from the Greek mimema (“that which is imitated”) and shortened it to rhyme with “gene” to highlight memes as cultural analogues of genes.
+The same coinage: evolutionary biologist Richard Dawkins in *The Selfish Gene* (**1976**) built **meme** from Greek *mimema* (“that which is imitated”) and shortened it to rhyme with *gene*, stressing memes as **cultural analogues of genes**.
 
 Religions, ideologies, social hierarchies, and shared fictions like money or nation‑states work this way. Once they take root, they guide behavior, attract followers, punish dissent, and defend against criticism.
 

@@ -32,12 +32,25 @@
                 <div class="seven-list__figure-placeholder" aria-hidden="true"></div>
             {{- end -}}
         </div>
+        {{- with $p.Params.tags -}}
+            <ul class="seven-list__tags" aria-label="Tags">
+                {{- range . -}}
+                    {{- $tagURL := partialCached "function/path.html" . . | printf "/tags/%v" -}}
+                    {{- with $p.Site.GetPage $tagURL -}}
+                        <li>
+                            <a href="{{ .RelPermalink }}" class="seven-list__tag">{{ .Title }}</a>
+                        </li>
+                    {{- end -}}
+                {{- end -}}
+            </ul>
+        {{- end -}}
     </div>
-    {{- $isPapers := eq $p.Type `papers` -}}
+    {{- $isClaims := eq $p.Type `claims` -}}
     {{- $isRealityProtocols := eq $p.Section "reality-protocols" -}}
-    {{- $asideBlocks := or (eq $p.Type `sayings`) $isPapers $p.Params.tldr $p.Params.fluff -}}
+    {{- $grounding := $p.Params.grounding | default $p.Params.paper -}}
+    {{- $asideBlocks := or (eq $p.Type `sayings`) $isClaims $p.Params.tldr $p.Params.fluff -}}
     <div class="seven-list__summary-col{{ if $asideBlocks }} seven-list__summary-col--sayings{{ end }}">
-        {{- if $isPapers -}}
+        {{- if $isClaims -}}
             {{- if or $p.Description $p.Summary -}}
                 <div class="seven-list__sayings-block">
                     <p class="seven-list__sayings-label">
@@ -56,13 +69,13 @@
                     </div>
                 </div>
             {{- end -}}
-            {{- with $p.Params.paper -}}
+            {{- with $grounding -}}
                 <div class="seven-list__sayings-block">
                     <p class="seven-list__sayings-label">
                         {{- if $isRealityProtocols -}}
-                            <span aria-hidden="true">📑</span> {{ T "protocolSource" }}
+                            <span aria-hidden="true">📑</span> {{ T "protocolGrounding" }}
                         {{- else -}}
-                            <span aria-hidden="true">📄</span> {{ T "labelPaper" }}
+                            <span aria-hidden="true">📄</span> {{ T "labelGrounding" }}
                         {{- end -}}
                     </p>
                     <div class="seven-list__summary-text seven-list__summary-text--md">

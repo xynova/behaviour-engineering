@@ -10,18 +10,18 @@ other = "Context"
 [tldr]
 other = "TLDR"
 
-[labelPaper]
-other = "Paper"
+[labelGrounding]
+other = "Grounding"
 
 [labelResearch]
 other = "Research"
 
-# reality-protocols + type papers — sidebar labels (distinct from sayings TLDR / Context).
+# reality-protocols + type claims — sidebar labels (distinct from sayings TLDR / Context).
 [protocolClaim]
 other = "Claim"
 
-[protocolSource]
-other = "Source"
+[protocolGrounding]
+other = "Grounding"
 
 [protocolDepth]
 other = "Dig deeper"

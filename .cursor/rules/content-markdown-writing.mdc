@@ -1,0 +1,39 @@
+---
+description: >-
+  Instructs English prose, punctuation, and Hugo front matter for site markdown
+  under content/. Apply when creating, editing, or reviewing files matching
+  content/**/*.md.
+globs: content/**/*.md
+alwaysApply: false
+---
+
+# Site markdown (`content/**/*.md`)
+
+## Language
+
+- MUST write body copy, titles, `description`, and `grounding` in English only.
+- MUST keep register informal-standard: plain vocabulary; use technical or academic terms only for named constructs, citations, or definitions.
+- MUST default to short declarative sentences. Use one longer sentence only for setup; do not chain many subclauses.
+- MUST use repetition only for rhetorical emphasis, not padding.
+
+## Punctuation
+
+- MUST NOT use the em dash character (U+2014). Use comma, semicolon, colon, or parentheses.
+
+## Front matter when `type: claims`
+
+- MUST treat `description` as the Claim: it must read clearly alone in list and card views.
+- MUST treat `grounding` as support for the Claim: definitions, named constructs, dates, and links. It is not a full article and not a substitute for an optional long quotation in the body.
+- MUST follow `.cursor/skills/claims-content/SKILL.md` for field roles and the optional `[WHAT HE SAID]` pattern.
+
+## Body
+
+- MAY use second person for stakes or direct address. MUST NOT turn most paragraphs into imperative lists or manuals.
+- MUST prefer concrete verbs and metaphor over stacks of abstract nouns.
+- MUST use **bold** sparingly, only for emphasis.
+- MAY use emoji as section or title markers. MUST NOT put emoji in most sentences.
+
+## Do not
+
+- MUST NOT add filler, vague intensifiers, or stock openers (for example "as we all know").
+- MUST NOT open by copying the Claim verbatim unless that repetition is intentional.

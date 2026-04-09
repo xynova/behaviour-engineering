@@ -2,119 +2,25 @@
 alwaysApply: true
 ---
 
-# 🤖 **AI REASONING PROTOCOL**
+# AI protocol
 
-## Table of Contents
+## Conversation before implementation
 
-### **Core Sections**
-- [**Conversation-First Protocol (MANDATORY)**](#conversation-first-protocol-mandatory) (Line 19)
-- [**Before Taking Any Setup Action**](#before-taking-any-setup-action) (Line 35)
-- [**Critical Language Requirements**](#critical-language-requirements) (Line 44)
-  - English-Only Policy (MANDATORY) (Line 46)
-  - AI-Optimized English Standards (Line 54)
-  - Examples (Line 61)
-- [**Cloning Library Source Code for Better Understanding and Interface Development**](#cloning-library-source-code-for-better-understanding-and-interface-development) (Line 68)
+- MUST NOT implement, fix, or edit code when the user only asks a question or raises a concern without a clear implementation request.
+- MUST answer with analysis, options, and clarifying questions first.
+- MUST implement only after explicit requests (for example: "implement this", "fix this", "make these changes").
 
----
+## Before setup or environment changes
 
-## **CONVERSATION-FIRST PROTOCOL (MANDATORY)**
+- MUST state the planned action, cite which rules apply, and list next steps before running commands that change setup.
 
-### **CRITICAL: Pause and Discuss Before Taking Action**
+## Language (code and docs)
 
-**NEVER automatically jump into fix/implementation mode when the user asks a question or raises a concern.**
+- MUST use English only for code, identifiers, comments, strings, paths, and documentation.
+- MUST use simple words, short sentences, and one consistent English term per concept.
+- MUST NOT use non-English text in the codebase.
+- Example: use `userName` and `getData()`; do not use mixed-language identifiers or comments.
 
-### **When User Asks Questions or Raises Concerns:**
-- **ALWAYS pause and have a conversation first**
-- **DISCUSS the question**: Explore options, ask clarifying questions, provide analysis
-- **WAIT for explicit instruction**: Only take action when the user explicitly requests implementation
-- **DO NOT start fixing, implementing, or modifying code automatically**
+## Library source for debugging
 
-### **When to Take Action:**
-- **ONLY when explicitly instructed** with phrases like:
-  - "go ahead and implement this"
-  - "please fix this"
-  - "implement the solution"
-  - "make these changes"
-  - Other clear, direct implementation requests
-
-### **Expected Behavior:**
-- ✅ **User asks a question** → AI discusses, explores, asks clarifying questions
-- ✅ **User provides feedback** → AI acknowledges, discusses implications, waits for direction
-- ✅ **User requests implementation** → AI proceeds with implementation
-- ❌ **User asks a question** → AI immediately starts fixing (WRONG - DO NOT DO THIS)
-- ❌ **User raises a concern** → AI immediately starts implementing changes (WRONG - DO NOT DO THIS)
-
-### **Rationale:**
-- Users need time to discuss and understand options before committing to changes
-- Premature implementation can waste time on solutions that don't match user intent
-- Conversation ensures alignment before code changes are made
-
----
-
-## **Before Taking Any Setup Action:**
-**ALWAYS provide step-by-step reasoning that:**
-1. States what setup action you're about to take
-2. Explains which rules from this document apply
-3. Shows how you've considered those rules in your approach
-4. Outlines your specific plan and next steps
-
----
-
-## **CRITICAL LANGUAGE REQUIREMENTS**
-
-### **English-Only Policy (MANDATORY):**
-- **MUST USE ENGLISH ONLY** - All code, comments, variables, functions, strings, and documentation
-- **DIRECTORIES AND PATHS** - All directory names, file paths, and system references must use English
-- **THINKING PROCESS** - All AI reasoning, explanations, and internal processing must use English
-- **NO EXCEPTIONS** - Never use non-English characters, words, or symbols anywhere
-- **AI EFFICIENCY** - Use simple, clear English for better AI processing
-- **CONSISTENCY** - Same English terms throughout the entire codebase
-
-### **AI-Optimized English Standards:**
-- **Simple words** - Use basic English vocabulary
-- **Clear structure** - Write in short, direct sentences
-- **Standard terms** - Use common programming English words
-- **No slang** - Avoid informal language or abbreviations
-- **Consistent naming** - Same English word for same concept
-
-### **Examples:**
-✅ **CORRECT:** `userName`, `getData()`, `// Get user information`  
-❌ **WRONG:** `nombreUsuario`, `obtenerDatos()`, `// Obtener información del usuario`  
-❌ **WRONG:** `user_name`, `get_data()`, `// Get user info` (inconsistent style)
-
----
-
-## **CLONING LIBRARY SOURCE CODE FOR BETTER UNDERSTANDING AND INTERFACE DEVELOPMENT**
-
-1. **When to Clone:**
-   - When you need to understand the internal structure of a library
-   - When you need to modify or extend a library's functionality
-   - When you need to debug a library's behavior
-   - When you need to integrate a library into your project
-
-2. **Where to Store Cloned Repositories:**
-   - Use a temporary folder (e.g., `tmp/`) for cloned repositories
-   - Keep cloned repositories organized by project or library name
-   - Use a version control system (e.g., Git) to manage cloned repositories
-
-3. **Specific Examples:**
-   - Letta library: `tmp/letta-library`
-   - TUI library: `tmp/tui-library`
-
-4. **Benefits and Expected Outcomes:**
-   - Better understanding of library code
-   - Ability to modify and extend library functionality
-   - Improved debugging capabilities
-   - Faster development of new features
-
-5. **DO and DON'T Guidelines:**
-   - **DO:**
-     - Clone only the necessary files and directories
-     - Keep cloned repositories up-to-date
-     - Use descriptive commit messages
-     - Document any changes made to the cloned code
-   - **DON'T:**
-     - Modify the original library files
-     - Commit directly to the original library repository
-     - Share cloned repositories publicly
-     - Modify or delete cloned repositories without permission
+- MAY clone upstream into `tmp/<library-name>` to read or debug. MUST NOT modify or commit to upstream repos. MUST keep clones out of unrelated paths.

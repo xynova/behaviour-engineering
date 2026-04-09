@@ -6,6 +6,17 @@
 // Import Google Fonts or other web fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+// Anchor / inline link tokens — one hover accent everywhere we style prose links.
+// Hover matches LoveIt global `a:hover` / site footer accent (#2d96bd light, ice blue in dark).
+$link: #5b1273;
+$link-hover: #63a0b6;
+$link-underline: rgba(91, 18, 115, 0.45);
+$link-dark: #e8c4ff;
+$link-hover-dark: #bdebfc;
+// LoveIt default `a` rest color (matches surrounding footer line text).
+$footer-link: #161209;
+$footer-link-on-dark: #a9a9b3;
+
 h1, h2, h3, h4, h5, h6 {
     font-family: "Montserrat", sans-serif;
     font-weight: 500 !important;
@@ -13,12 +24,64 @@ h1, h2, h3, h4, h5, h6 {
     color:#2f0035 !important; 
 
     a {
-        color:#5b1273 ; 
+        color: $link;
+
+        &:hover,
+        &:focus-visible {
+            color: $link-hover;
+        }
+    }
+}
+
+// Same tokens as `.page.single .content a` / cards (dark theme).
+[theme=dark] :is(h1, h2, h3, h4, h5, h6) a {
+    color: $link-dark;
+
+    &:hover,
+    &:focus-visible {
+        color: $link-hover-dark;
+    }
+}
+
+// Site footer — same rest/hover pattern as LoveIt global `a` (neutral text, blue on hover only).
+footer a {
+    text-decoration: none;
+    color: $footer-link;
+
+    &::before,
+    &::after {
+        color: inherit;
     }
 
-    a:hover {
-        color: #ef3982  ; 
+    &:hover,
+    &:active,
+    &:focus-visible {
+        color: $link-hover;
     }
+}
+
+[theme=dark] footer a {
+    color: $footer-link-on-dark;
+
+    &::before,
+    &::after {
+        color: inherit;
+    }
+
+    &:hover,
+    &:active,
+    &:focus-visible {
+        color: $link-hover-dark;
+    }
+}
+
+// Single posts: cap width so images and line length don’t span the full `.container` (LoveIt default is very wide).
+.page.single {
+    max-width: 40rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
 
 .header-wrapper {
@@ -418,6 +481,28 @@ h1, h2, h3, h4, h5, h6 {
     strong {
         font-weight: 700;
     }
+
+    a {
+        color: $link;
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-color: $link-underline;
+        text-underline-offset: 2px;
+
+        &:hover {
+            color: $link-hover;
+            text-decoration-color: $link-hover;
+        }
+    }
+}
+
+[theme=dark] .home-post-tile__summary a {
+    color: $link-dark;
+
+    &:hover {
+        color: $link-hover-dark;
+        text-decoration-color: $link-hover-dark;
+    }
 }
 
 .home-post-tile__footer {
@@ -564,11 +649,12 @@ h1, h2, h3, h4, h5, h6 {
         color: #e8d5ec;
     }
 
-    &:hover {
-        color: #b63cdf;
+    &:hover,
+    &:focus-visible {
+        color: $link-hover;
 
         [theme=dark] & {
-            color: #ef3982;
+            color: $link-hover-dark;
         }
     }
 }
@@ -622,6 +708,52 @@ h1, h2, h3, h4, h5, h6 {
                 rgba(216, 98, 229, 0.1) 0%,
                 rgba(0, 0, 0, 0.2) 100%
             );
+        }
+    }
+}
+
+// Under list thumbnail: taxonomy tags (links to /tags/<term>/)
+.seven-list__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.45rem;
+    list-style: none;
+    margin: 0.65rem 0 0;
+    padding: 0;
+    align-items: center;
+}
+
+.seven-list__tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: $link;
+    background: rgba(91, 18, 115, 0.08);
+    border: 1px solid rgba(91, 18, 115, 0.2);
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+        color: $link-hover;
+        background: rgba(45, 150, 189, 0.1);
+        border-color: rgba(45, 150, 189, 0.35);
+    }
+
+    [theme=dark] & {
+        color: $link-dark;
+        background: rgba(232, 196, 255, 0.08);
+        border-color: rgba(232, 196, 255, 0.22);
+
+        &:hover,
+        &:focus-visible {
+            color: $link-hover-dark;
+            background: rgba(189, 235, 252, 0.08);
+            border-color: rgba(189, 235, 252, 0.35);
         }
     }
 }
@@ -721,6 +853,57 @@ h1, h2, h3, h4, h5, h6 {
         strong {
             font-weight: 700;
         }
+    }
+
+    // Markdown links in Claim / Grounding / Teaser (otherwise inherit body black).
+    a {
+        color: $link;
+        font-weight: 600;
+        text-decoration: none;
+        text-decoration-color: $link-underline;
+        text-underline-offset: 3px;
+        border-bottom-style: dotted;
+        border-bottom-width: 1px;
+        border-bottom-color: $link-underline;
+
+        &:hover {
+            color: $link-hover;
+            text-decoration-color: $link-hover;
+            border-bottom-color: $link-hover;
+        }
+    }
+}
+
+[theme=dark] .seven-list__summary-text a {
+    color: $link-dark;
+
+    &:hover {
+        color: $link-hover-dark;
+        text-decoration-color: $link-hover-dark;
+        border-bottom-color: $link-hover-dark;
+    }
+}
+
+// Single post body: same affordance for links in claims / sayings blocks (markdown).
+.page.single .content a {
+    color: $link;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: $link-underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+        color: $link-hover;
+        text-decoration-color: $link-hover;
+    }
+}
+
+[theme=dark] .page.single .content a {
+    color: $link-dark;
+
+    &:hover {
+        color: $link-hover-dark;
+        text-decoration-color: $link-hover-dark;
     }
 }
 

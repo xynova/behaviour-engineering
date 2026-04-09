@@ -33,8 +33,8 @@ enableEmoji = true
     [params.header.title]
       # URL of the LOGO
       logo = "/images/head.svg"
-      # Put "behaviour" in pre field (supports HTML)
-      pre = 'behaviour'
+      # Put "behavior" in pre field (supports HTML)
+      pre = 'behavior'
       # Put "engineering.ai" in name field
       name = "engineering.ai"
       post = ""

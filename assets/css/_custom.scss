@@ -86,7 +86,7 @@ footer a {
 
 .header-wrapper {
     background-color: #1d1321;
-
+    
     .menu-item{ 
         color: #eddff2;
 
@@ -110,7 +110,6 @@ footer a {
 
     .header-title {
         font-family: "Montserrat", sans-serif;
-        font-size: 2rem;
         letter-spacing: -0.03rem;
         font-weight: 400;
         display: flex;
@@ -120,6 +119,7 @@ footer a {
             color: #eddff2 !important;
             display: flex;
             align-items: center;
+            min-width: 0;
         }
 
         .logo {
@@ -147,13 +147,6 @@ footer a {
         }
     }
 
-        
-    // Hide theme switch button
-    .theme-switch {
-        display: none !important;
-    }
-
-
     .search{
 
         input {
@@ -163,11 +156,224 @@ footer a {
         .search-button {
             color: #eddff2;
         }
-    }    
+    }
 }
 
+// Desktop only: large wordmark. (Do not apply 2rem to mobile — it crowds the bar next to `.menu-toggle`.)
+#header-desktop .header-wrapper {
+    padding: 0 2rem 0 3vh;
+}
 
+// Use hamburger / mobile header below 1050px. LoveIt default is 680px (`themes/LoveIt/assets/css/_core/_media.scss`).
+// `theme.js` still uses 680px for `Util.isMobile()` (search UX, scroll niceties); menu toggle still works.
+@media only screen and (max-width: 1050px) {
+    #header-desktop {
+        display: none !important;
+    }
 
+    #header-mobile {
+        display: block !important;
+    }
+
+    body.blur {
+        overflow: hidden;
+    }
+
+    .page {
+        width: 100%;
+
+        [data-header-mobile] & {
+            padding-top: var(--header-height);
+        }
+
+        [data-header-mobile="normal"] & {
+            padding-top: 0;
+        }
+
+        .categories-card {
+            .card-item {
+                width: 100%;
+            }
+        }
+    }
+
+    .copyright {
+        .copyright-line {
+            .icp-splitter {
+                display: none;
+            }
+
+            .icp-br {
+                display: block;
+            }
+        }
+    }
+
+    // Mobile header: logo shows from 370px wide; hidden below 369px (see following @media).
+    :root {
+        // Room for a two-line wordmark (behaviour + engineering.ai) when the bar wraps.
+        --header-height: 4.5rem;
+    }
+
+    // Fixed bar: pin full viewport width (avoids stray edge gap on some devices).
+    #header-mobile {
+        width: 100%;
+        left: 0;
+        right: 0;
+        box-sizing: border-box;
+    }
+
+    // Flex row: title must shrink; toggle must never be clipped. Title font size: LoveIt default
+    // (`#header-mobile .header-container .header-wrapper .header-title` → `var(--header-title-font-size)`).
+    #header-mobile .header-wrapper {
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 !important;
+    }
+
+    #header-mobile .header-wrapper .header-title {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: none;
+        overflow: visible;
+        padding-left: 0.7rem;
+        
+    }
+
+    // Let the wordmark wrap to a second line on narrow widths so “engineering.ai” stays visible.
+    #header-mobile .header-wrapper .header-title a {
+        min-width: 0;
+        align-items: center;
+        align-content: center;
+        row-gap: 0;
+        font-size: 1.4rem;
+    }
+
+    #header-mobile .header-wrapper .header-title .header-title-name {
+        min-width: 0;
+    }
+
+    // Keep LoveIt’s block + margin layout for spans — flex column was clipping a bar on short rows.
+    #header-mobile .header-wrapper .menu-toggle {
+        flex: 0 0 auto;
+        width: 2.25rem;
+        min-width: 2.25rem;
+        line-height: var(--header-height);
+    }
+}
+
+// Very narrow phones: drop header logo so the wordmark + menu still fit.
+@media only screen and (max-width: 369px) {
+    #header-mobile .header-wrapper .header-title .logo {
+        display: none !important;
+    }
+}
+
+// LoveIt has no param to disable light/dark toggle. `.theme-switch` appears in the desktop bar
+// and in the mobile slide-down menu — hide both.
+.theme-switch {
+    display: none !important;
+}
+
+// Mobile menu: LoveIt draws the hamburger with `$global-font-color` (~#161209). Our header bar is
+// `#1d1321`, so the lines disappear. Force high-contrast bars (matches `.menu-item` text).
+#header-mobile .header-wrapper .menu-toggle span {
+    background: #eddff2 !important;
+}
+
+#header-mobile .header-wrapper .menu-toggle.active span {
+    background: #eddff2 !important;
+}
+
+[theme=dark] #header-mobile .header-wrapper .menu-toggle span {
+    background: #f3e8f6 !important;
+}
+
+[theme=dark] #header-mobile .header-wrapper .menu-toggle.active span {
+    background: #f3e8f6 !important;
+}
+
+// Mermaid: dark chart theme is injected in `layouts/_default/_markup/render-codeblock-mermaid.html`
+// and `layouts/shortcodes/mermaid.html`. Panel styling matches the site header plum tones.
+main .mermaid {
+    background: #2d2a32;
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    margin: 1.25rem 0;
+    border: 1px solid rgba(237, 223, 242, 0.12);
+    box-sizing: border-box;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        // Do not set font-size on all `svg text` at once: node vs edge labels need different scales.
+
+        // Node box text (primary)
+        g.node text,
+        g.node tspan,
+        g.node .label text,
+        g.node .label tspan {
+            font-size: 14px !important;
+        }
+
+        g.node .label foreignObject,
+        g.node .label foreignObject p,
+        g.node .label foreignObject span,
+        g.node .label foreignObject div {
+            font-size: 14px !important;
+            line-height: 1.3 !important;
+        }
+
+        // Edge / arrow labels (slightly smaller than nodes, still readable)
+        $mermaid-edge-font: 12px;
+
+        g.edgeLabel text,
+        g.edgeLabel tspan,
+        .edgeLabel text,
+        .edgeLabel tspan {
+            font-size: $mermaid-edge-font !important;
+        }
+
+        g.edgeLabel foreignObject,
+        g.edgeLabel foreignObject p,
+        g.edgeLabel foreignObject span,
+        g.edgeLabel foreignObject div,
+        .edgeLabel foreignObject,
+        .edgeLabel foreignObject p,
+        .edgeLabel foreignObject span {
+            font-size: $mermaid-edge-font !important;
+            line-height: 1.35 !important;
+        }
+
+        // Edge labels only: same .labelBkg wrapper as nodes, but edge text must be centered in the pill.
+        foreignObject .labelBkg:has(.edgeLabel) {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 100% !important;
+            box-sizing: border-box !important;
+            text-align: center !important;
+            background-color: inherit !important;
+        }
+
+        span.edgeLabel,
+        .edgeLabel p {
+            margin: 0 !important;
+            text-align: center !important;
+            width: 100%;
+        }
+    }
+}
+
+[theme=dark] main .mermaid {
+    border-color: rgba(243, 232, 246, 0.14);
+}
 
 .principal-quote {
     font-family: "Montserrat", sans-serif;
@@ -264,6 +470,16 @@ footer a {
     .glide__arrows,
     .glide__bullets {
         display: none; // Hide navigation if you want auto-play only
+    }
+}
+
+// Home (mobile): hide the two intro panels (carousel + hero quote).
+@media (max-width: 600px) {
+    .page.home {
+        .quote-carousel,
+        .hero-quote {
+            display: none !important;
+        }
     }
 }
 
@@ -768,7 +984,7 @@ footer a {
 
 // Claims single: tag pills directly under featured image (see layouts/claims/single.html)
 .post-tags-below-featured {
-    margin: 0.35rem 0 0.75rem;
+    margin: 0.35rem 0 0.75rem; 
 
     .seven-list__tags {
         margin-top: 0;
@@ -781,7 +997,7 @@ footer a {
     flex-wrap: wrap;
     gap: 0.35rem 0.45rem;
     list-style: none;
-    margin: 0.65rem 0 0;
+    margin: 0.65rem 0 1.5rem;
     padding: 0;
     align-items: center;
 }
@@ -885,6 +1101,14 @@ footer a {
     &:first-of-type {
         margin-top: 0.5rem;
     }
+}
+
+// Detail pages: keep long-form reading narrower for cows + sayings.
+.page.single.single-cow,
+.page.single.single-saying {
+    max-width: 30rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 // Claims detail: TOC hierarchy — body headings (h3) nested under "Thoughts".

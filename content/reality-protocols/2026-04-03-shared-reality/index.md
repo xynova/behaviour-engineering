@@ -17,12 +17,18 @@ categories: ["Reality-Protocols"]
 
 ---
 
-### 🔄 How alignment stacks
+### How alignment stacks
 
-> Shared Feelings →  
-> Shared Practices →  
-> Shared Coordination →  
-> Shared Identity ✅
+```mermaid
+flowchart TB
+    classDef pastelLavender fill:#e8d4ef,stroke:#b894c9,color:#1c1422,stroke-width:2px
+    classDef pastelSky fill:#cfe8f6,stroke:#7eb3d4,color:#1c1422,stroke-width:3px
+    classDef pastelMint fill:#d4f0e2,stroke:#7fbf9a,color:#1c1422,stroke-width:4px
+    classDef pastelApricot fill:#fde6d4,stroke:#e0a882,color:#1c1422,stroke-width:5px,padding:10em;
+    A("Shared feelings"):::pastelLavender -.->|leads to| B("Shared practices"):::pastelSky
+    B -.->|leads to| C("Shared coordination"):::pastelMint
+    C -.->|leads to| D(("Shared identity ✅")):::pastelApricot
+```
 
 ### Language as zip
 

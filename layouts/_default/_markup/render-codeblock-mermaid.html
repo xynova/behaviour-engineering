@@ -1,7 +1,9 @@
 {{- $params := .Page.Scratch.Get "params" -}}
 {{- $render := $params.code.render | default dict -}}
 {{- if $render.mermaid | default true -}}
-    {{- dict "Content" .Inner "Page" .Page | partial "plugin/mermaid.html" -}}
+    {{- $prefix := "%%{init: {\"theme\": \"dark\"}}%%\n" -}}
+    {{- $inner := print $prefix .Inner -}}
+    {{- dict "Content" $inner "Page" .Page | partial "plugin/mermaid.html" -}}
 {{- else -}}
-    {{- dict "Content" .Inner "Lang" .Type "Options" .Options "Page" .Page | partial "plugin/code-block.html" -}}
+    {{- transform.Highlight .Inner .Type "" | safeHTML -}}
 {{- end -}}

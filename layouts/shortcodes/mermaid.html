@@ -1,0 +1,3 @@
+{{- $prefix := "%%{init: {\"theme\": \"dark\"}}%%\n" -}}
+{{- $inner := print $prefix (trim .Inner "\n") -}}
+{{- dict "Content" $inner "Page" .Page | partial "plugin/mermaid.html" -}}

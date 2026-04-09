@@ -262,6 +262,7 @@ themes/LoveIt/exampleSite/content/posts/
 ## Quick Lookup
 
 **Claims posts (Claim / Grounding)?** → `.cursor/skills/claims-content/SKILL.md`  
+**Cognitive-Memetics section (cows / sayings)?** → `.cursor/skills/cognitive-memetics-content/SKILL.md`  
 **Custom CSS (links, footer, section lists)?** → `assets/css/_custom.scss`  
 **Need to add an image?** → `theme-documentation-extended-shortcodes/index.en.md` Line 128-195  
 **Need front matter?** → `theme-documentation-content/index.en.md` Line 60-185  

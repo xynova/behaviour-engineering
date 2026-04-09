@@ -1,3 +1,7 @@
+# Theme string (LoveIt): category line on singles and summaries.
+[includedInCategories]
+other = "Included in {{ .Categories }}"
+
 [summary]
 other = "Summary"
 
@@ -20,8 +24,15 @@ other = "Research"
 [protocolClaim]
 other = "Claim"
 
+[protocolThoughts]
+other = "Thoughts"
+
 [protocolGrounding]
 other = "Grounding"
 
 [protocolDepth]
 other = "Dig deeper"
+
+# type: sayings — main markdown body when TLDR / Context / Teaser precede it (detail TOC).
+[sayingsArticle]
+other = "Article"

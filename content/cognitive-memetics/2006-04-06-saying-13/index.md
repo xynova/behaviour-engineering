@@ -1,6 +1,7 @@
 ---
 date: '2026-04-08T08:00:00+11:00'
 heading_code: W13
+project: "Arepa-Contigo"
 title: Cada loco con su tema
 type: sayings
 description: "To each their own — a lighthearted nod to quirky obsessions."
@@ -14,8 +15,14 @@ resources:
   - name: "featured-image"
     src: "gollum.jpeg"
 
-tags: ["emoji","caca"]
-categories: ["venezuelan sayings"]
+tags:
+  - "StreetWisdom"
+  - "CulturalStopwatch"
+  - "TakeBackYourMcDonaldsCulture"
+  - "Arepa-Contigo"
+  - "VenezuelanSayings"
+  - "ToEachTheirOwn"
+categories: ["Cognitive-Memetics", "Venezuelan-Street-Wisdom"]
 
 ---
 

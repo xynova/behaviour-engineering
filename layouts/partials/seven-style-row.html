@@ -7,9 +7,23 @@
 {{- with $p.Resources.GetMatch "featured-image-preview" -}}
     {{- $image = .RelPermalink -}}
 {{- end -}}
-{{- $cat := $p.Section -}}
+{{- $catBlock := "" -}}
 {{- with $p.Params.categories -}}
-    {{- $cat = index . 0 -}}
+    {{- $links := slice -}}
+    {{- range . -}}
+        {{- $catPage := partialCached "function/path.html" . . | printf "/categories/%v" | $p.Site.GetPage -}}
+        {{- if $catPage -}}
+            {{- $links = $links | append (printf `<a href="%s" class="seven-list__category-link">%s</a>` $catPage.RelPermalink ($catPage.Title | htmlEscape)) -}}
+        {{- else -}}
+            {{- $links = $links | append (printf `<span class="seven-list__category-fallback">%s</span>` (. | htmlEscape)) -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if gt (len $links) 0 -}}
+        {{- $catBlock = delimit $links `<span class="seven-list__meta-sep" aria-hidden="true"> · </span>` -}}
+    {{- end -}}
+{{- end -}}
+{{- if not $catBlock -}}
+    {{- $catBlock = $p.Section -}}
 {{- end -}}
 {{- $ariaTitle := $p.Title | plainify -}}
 {{- with $p.Params.heading_code -}}
@@ -20,7 +34,7 @@
         <div class="seven-list__meta">
             <time datetime="{{ $p.PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ $p.Date.Format "2006/01/02" }}</time>
             <span class="seven-list__dot" aria-hidden="true"></span>
-            <span class="seven-list__type">{{ $cat }}</span>
+            <span class="seven-list__type{{- if $p.Params.categories }} seven-list__categories{{- end -}}">{{ $catBlock | safeHTML }}</span>
         </div>
         <a href="{{ $p.RelPermalink }}" class="seven-list__title">{{- partial "heading-title-markup.html" $p -}}</a>
         <div class="seven-list__figure">

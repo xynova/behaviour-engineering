@@ -2,8 +2,8 @@
 name: claims-content
 description: >-
   Authors and edits Hugo posts with type claims: Claim (description), Grounding,
-  section vs categories vs punchy hashtag-like tags, optional WHAT HE SAID quotes,
-  and prose style.
+  section vs categories vs punchy hashtag-like tags, optional primary-source quote
+  blocks (`###` heading + blockquote), and prose style.
   Use when editing or adding content under reality-protocols (or other sections
   using claims), when the user mentions Claim, Grounding, categories, tags, or
   claims archetype, or when shaping list-view copy for those posts.
@@ -20,9 +20,12 @@ Posts use front matter fields that split **narrative** from **intellectual ancho
 | Field | Role |
 |-------|------|
 | **`description`** | **Claim**: the narrative assertion in your voice. What the reader should believe or notice. Often shown as the **Claim** block in the UI. |
+| **Body** (markdown under front matter) | **Thoughts** on the detail page: essay, metaphor, examples, optional **primary-source quote** section. Rendered **after** Claim, **before** Grounding. |
 | **`grounding`** | **Support for the Claim**: definitions, named constructs, dates, and **links** (paper, overview) so the Claim is tied to sources or standard terminology. Not a duplicate of the full article. |
 
 **Relationship:** Grounding **supports** the Claim. The Claim says *what you are arguing in plain language*; Grounding says *what ideas or citations that maps onto*.
+
+**Detail page order** (`layouts/claims/single.html`): **Claim** → **Thoughts** (body) → **Grounding** → optional **Research** (`research` front matter).
 
 ## Section, categories, and tags (Hugo)
 
@@ -62,12 +65,12 @@ Posts use front matter fields that split **narrative** from **intellectual ancho
 ## Grounding (how to write it)
 
 - **Density:** Similar to a short abstract plus pointers: enough to define key terms (bold) and point to a primary source or stable overview link.
-- **Not the same as** an optional **`[WHAT HE SAID]`** block in the body: Grounding is the **digest**; a quote block is the **exhibit** (exact words). Grounding can be broader than one quote; the quote is optional and narrow.
+- **Not the same as** an optional **quote exhibit** in the body: Grounding is the **digest**; a blockquote under a small heading is the **exhibit** (exact words). Grounding can be broader than one quote; the quote is optional and narrow.
 - **Etymology vs theory:** For coinages (e.g. *meme*), etymology + year + overview link fits. For theory papers, state the **construct** (e.g. shared reality, epistemic companions), what the cited work does, then **Source:** link (mark `(PDF)` when it is a PDF).
 
-## Optional body convention: `[WHAT HE SAID]`
+## Optional body convention: primary-source quote (“What he said”)
 
-- Plain markdown label before a blockquote, **not** a Hugo shortcode unless the project adds one.
+- Use a **`###`** subsection (with an emoji, same style as other **Thoughts** headings), then the blockquote. Example: `### 💬 What he said`. That gives a heading id, **Contents** entry (nested under **Thoughts**), and anchors consistent with the rest of the outline. Do **not** use a plain **`[WHAT HE SAID]`** line; that was legacy markup, not a project convention.
 - Use when a **long primary-source quotation** earns its space. Omit if Grounding + prose are enough.
 
 ## Prose style (project preference)
@@ -79,8 +82,8 @@ Posts use front matter fields that split **narrative** from **intellectual ancho
 
 1. Draft **`description`** (Claim) so it reads well alone on a card.
 2. Draft **`grounding`** so it names constructs and citations that anchor the Claim.
-3. Write the body (metaphor, examples, optional `[WHAT HE SAID]`).
-4. Re-read Claim + Grounding together for alignment.
+3. Write the body (metaphor, examples, optional quote exhibit with a `###` heading before the blockquote).
+4. Re-read Claim, then body as **Thoughts**, then Grounding for alignment (same order as the live page).
 
 ## References in this repo
 

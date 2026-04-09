@@ -419,7 +419,7 @@ footer a {
 }
 
 .seven-list__title .heading-code--tldr {
-    color: #463749;
+    color: #8c808e;
 
     [theme=dark] & {
         color: #f0c8ff;
@@ -443,6 +443,36 @@ footer a {
     .seven-list__title:hover &,
     .seven-list__title:focus-visible & {
         color: inherit;
+    }
+}
+
+// type cows / sayings + Params.project — single hero: week + project (big), then unique episode title.
+.single-title--series-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    line-height: 1.15;
+}
+
+.series-hero-line {
+    display: block;
+}
+
+.series-project-line {
+    font-weight: 800;
+    letter-spacing: -0.03rem;
+}
+
+.series-episode-line {
+    display: block;
+    font-size: clamp(1.1rem, 2.6vw, 1.55rem);
+    font-weight: 700;
+    letter-spacing: -0.02rem;
+    color: #3d1f48;
+
+    [theme=dark] & {
+        color: #e8d5ec;
     }
 }
 
@@ -635,6 +665,30 @@ footer a {
 
 .seven-list__type {
     text-transform: lowercase;
+
+    &.seven-list__categories {
+        text-transform: none;
+    }
+}
+
+.seven-list__category-link {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        color: $link-hover;
+        text-decoration: underline;
+
+        [theme=dark] & {
+            color: $link-hover-dark;
+        }
+    }
+}
+
+.seven-list__meta-sep {
+    opacity: 0.65;
+    padding: 0 0.05em;
 }
 
 .seven-list__title {
@@ -709,6 +763,15 @@ footer a {
                 rgba(0, 0, 0, 0.2) 100%
             );
         }
+    }
+}
+
+// Claims single: tag pills directly under featured image (see layouts/claims/single.html)
+.post-tags-below-featured {
+    margin: 0.35rem 0 0.75rem;
+
+    .seven-list__tags {
+        margin-top: 0;
     }
 }
 
@@ -821,6 +884,44 @@ footer a {
 
     &:first-of-type {
         margin-top: 0.5rem;
+    }
+}
+
+// Claims detail: TOC hierarchy — body headings (h3) nested under "Thoughts".
+.page.single #TableOfContents {
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    > ul > li {
+        margin: 0.35rem 0;
+    }
+
+    > ul > li > a {
+        font-weight: 600;
+    }
+
+    ul ul {
+        margin: 0.4rem 0 0.15rem 0;
+        padding: 0.25rem 0 0.25rem 0.75rem;
+        border-left: 2px solid rgba(99, 160, 182, 0.45);
+        list-style: none;
+
+        li {
+            margin: 0.28rem 0;
+        }
+
+        a {
+            font-size: 0.88em;
+            font-weight: 500;
+            line-height: 1.35;
+        }
+    }
+
+    [theme=dark] & ul ul {
+        border-left-color: rgba(189, 235, 252, 0.35);
     }
 }
 

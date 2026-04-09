@@ -29,20 +29,13 @@
 
     <div class="post-meta">
       <div class="post-meta-line">
-        {{- $author := $params.author | default .Site.Params.Author.name | default (T "author") -}}
-        {{- $authorLink := $params.authorlink | default .Site.Params.Author.link | default .Site.Home.RelPermalink -}}
-        <span class="post-author">
-          {{- $options := dict "Class" "author" "Destination" $authorLink "Title" "Author" "Rel" "author" "Icon" (dict "Class" "fas fa-user-circle") "Content" $author -}}
-          {{- partial "plugin/a.html" $options -}}
-        </span>
-
         {{- $categories := slice -}}
         {{- range .Params.categories -}}
           {{- $category := partialCached "function/path.html" . . | printf "/categories/%v" | $.Site.GetPage -}}
           {{- $categories = $categories | append (printf `<a href="%v"><i class="far fa-folder" aria-hidden="true"></i>%v</a>` $category.RelPermalink $category.Title) -}}
         {{- end -}}
         {{- with delimit $categories "&nbsp;" -}}
-          &nbsp;<span class="post-category">
+          <span class="post-category">
             {{- dict "Categories" . | T "includedInCategories" | safeHTML -}}
           </span>
         {{- end -}}
@@ -67,6 +60,21 @@
       </div>
     {{- end -}}
 
+    {{- with .Params.tags -}}
+      <div class="post-tags-below-featured">
+        <ul class="seven-list__tags" aria-label="Tags">
+          {{- range . -}}
+            {{- $tagURL := partialCached "function/path.html" . . | printf "/tags/%v" -}}
+            {{- with $.Site.GetPage $tagURL -}}
+              <li>
+                <a href="{{ .RelPermalink }}" class="seven-list__tag">{{ .Title }}</a>
+              </li>
+            {{- end -}}
+          {{- end -}}
+        </ul>
+      </div>
+    {{- end -}}
+
     {{- if ne $toc.enable false -}}
       <div class="details toc" id="toc-static" data-kept="{{ if $toc.keepStatic }}true{{ end }}">
         <div class="details-summary toc-title">
@@ -74,7 +82,7 @@
           <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
         </div>
         <div class="details-content toc-content" id="toc-content-static">
-          {{- dict "Content" .TableOfContents "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+          {{- dict "Content" (partial "claims-table-of-contents.html" .) "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
         </div>
       </div>
     {{- end -}}
@@ -82,7 +90,7 @@
     <div class="content" id="content">
       {{- $isRealityProtocols := eq .Section "reality-protocols" -}}
       {{- if or .Description .Summary -}}
-        <h2 class="sayings-section-heading">
+        <h2 id="section-claim" class="sayings-section-heading">
           {{- if $isRealityProtocols -}}
             <span aria-hidden="true">🎯</span> {{ T "protocolClaim" }}
           {{- else -}}
@@ -90,36 +98,42 @@
           {{- end -}}
         </h2>
         {{- if .Description -}}
-          {{- dict "Content" .Description "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+          {{- dict "Content" (.Description | markdownify) "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
         {{- else -}}
           <p>{{ .Summary | plainify }}</p>
         {{- end -}}
       {{- end -}}
 
+      {{- $bodyTrimmed := .Content | strings.TrimSpace -}}
+      {{- with $bodyTrimmed -}}
+        <h2 id="section-thoughts" class="sayings-section-heading">
+          <span aria-hidden="true">💭</span> {{ T "protocolThoughts" }}
+        </h2>
+        {{- dict "Content" $.Content "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+      {{- end -}}
+
       {{- $grounding := .Params.grounding | default .Params.paper -}}
       {{- with $grounding -}}
-        <h2 class="sayings-section-heading">
+        <h2 id="section-grounding" class="sayings-section-heading">
           {{- if $isRealityProtocols -}}
             <span aria-hidden="true">📑</span> {{ T "protocolGrounding" }}
           {{- else -}}
             <span aria-hidden="true">📄</span> {{ T "labelGrounding" }}
           {{- end -}}
         </h2>
-        {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+        {{- dict "Content" (. | markdownify) "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
       {{- end -}}
 
       {{- with .Params.research -}}
-        <h2 class="sayings-section-heading">
+        <h2 id="section-research" class="sayings-section-heading">
           {{- if $isRealityProtocols -}}
             <span aria-hidden="true">🔭</span> {{ T "protocolDepth" }}
           {{- else -}}
             <span aria-hidden="true">🔬</span> {{ T "labelResearch" }}
           {{- end -}}
         </h2>
-        {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+        {{- dict "Content" (. | markdownify) "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
       {{- end -}}
-
-      {{- dict "Content" .Content "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
     </div>
 
     {{- partial "single/footer.html" . -}}

@@ -24,7 +24,11 @@ alwaysApply: false
 
 - MUST treat `description` as the Claim: it must read clearly alone in list and card views.
 - MUST treat `grounding` as support for the Claim: definitions, named constructs, dates, and links. It is not a full article and not a substitute for an optional long quotation in the body.
-- MUST follow `.cursor/skills/claims-content/SKILL.md` for field roles and the optional `[WHAT HE SAID]` pattern.
+- MUST follow `.cursor/skills/claims-content/SKILL.md` for field roles and optional primary-source quotes: introduce them with a **`###`** heading (plus emoji like other **Thoughts** subsections), then the blockquote; do **not** use a plain `[WHAT HE SAID]` line.
+
+## Front matter under `content/cognitive-memetics/`
+
+- MUST follow `.cursor/skills/cognitive-memetics-content/SKILL.md` for **umbrella + project** `categories` (shareable `/categories/...` hubs), cube-cows vs sayings fields, and **Street Wisdom** tags (including LinkedIn hashtag mapping).
 
 ## Body
 

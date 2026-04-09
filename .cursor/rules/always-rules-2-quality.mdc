@@ -2,77 +2,23 @@
 alwaysApply: true
 ---
 
-# 🛡️ **GLOBAL CODE QUALITY & ANTI-CHEATING RULES**
+# Code quality (global)
 
-> **For AI (Cursor)**: These are GLOBAL rules that apply to ALL code, regardless of context (testing, architecture, implementation, etc.). These rules prevent cheating, shortcuts, and low-quality implementations.
+## Forbidden shortcuts
 
-## Table of Contents
+- MUST NOT ship placeholder logic that returns fixed fake data as if it were real behavior.
+- MUST NOT add fallbacks that hide errors or silent failures.
+- MUST NOT refactor by moving code only; separation must be real.
+- MUST NOT skip fixing dependencies or use deprecated APIs without a plan to replace them.
 
-### **Core Sections**
-- [**Global Anti-Cheating Protocols**](#-global-anti-cheating-protocols) (Line 22)
-  - Code Quality Anti-Cheating Rules (MANDATORY) (Line 24)
-  - Implementation Quality Rules (MANDATORY) (Line 37)
-- [**Global Quality Standards**](#-global-quality-standards) (Line 48)
-  - Code Quality Principles (Line 50)
-  - Quality Validation (Line 58)
-- [**Related Rules**](#-related-rules) (Line 69)
+## Required
 
----
+- MUST implement real behavior or fail in a clear, explicit way.
+- MUST keep modules testable in isolation where reasonable.
+- MUST use current patterns for the language and stack in use.
 
-## 🚫 **GLOBAL ANTI-CHEATING PROTOCOLS**
+## Before claiming done
 
-### **Code Quality Anti-Cheating Rules (MANDATORY)**
-These rules apply to ALL code, not just tests:
-
-- **DO NOT** refactor by simply moving code around without real separation of concerns
-- **DO NOT** create modules with artificial separation (e.g., by line count only)
-- **DO NOT** implement placeholder logic that returns hardcoded values
-- **DO NOT** create fake implementations that don't perform real business logic
-- **DO NOT** use deprecated patterns without updating to modern alternatives
-- **DO NOT** create modules that can't be tested independently
-- **DO NOT** skip work due to missing dependencies - fix the dependencies instead
-- **DO NOT** use fallback mechanisms that hide real problems
-- **DO NOT** create code that can be skipped - code must work or fail clearly
-
-### **Implementation Quality Rules (MANDATORY)**
-- **ALWAYS** implement real business logic, not placeholder functions
-- **ALWAYS** ensure proper separation of concerns when refactoring
-- **ALWAYS** use modern patterns and update deprecated code
-- **ALWAYS** make code independently testable
-- **NEVER** claim functionality works without actually implementing it
-- **NEVER** provide fake solutions or incomplete implementations
-- **NEVER** hide problems with fallback mechanisms
-
----
-
-## ✅ **GLOBAL QUALITY STANDARDS**
-
-### **Code Quality Principles**
-- **Real Implementation**: All code must perform actual business logic, not return hardcoded values
-- **Proper Separation**: Refactoring must create real separation of concerns, not just move code
-- **Modern Patterns**: Use current best practices, not deprecated patterns
-- **Testability**: All code must be independently testable
-- **No Shortcuts**: Fix dependencies and problems, don't work around them
-- **Clear Failures**: Code should fail clearly, not silently or with fallbacks
-
-### **Quality Validation**
-Before claiming any work is complete:
-- [ ] Code performs real business logic (not placeholders)
-- [ ] Refactoring creates real separation of concerns
-- [ ] Modern patterns are used (no deprecated code)
-- [ ] Code is independently testable
-- [ ] Dependencies are fixed (not worked around)
-- [ ] Failures are clear and explicit (no silent fallbacks)
-
----
-
-## 📚 **RELATED RULES**
-
-These global quality rules work together with:
-- **Testing Rules** (`rules-for-testing.mdc`) - For testing-specific quality requirements
-- **Go Coding Rules** (`rules-for-golang-coding.mdc`) - For Go-specific quality patterns
-- **Architecture Rules** (`always-rules-2-architecture.mdc`) - For architectural quality standards
-
----
-
-**Remember**: Quality is not optional. These rules apply to ALL code, regardless of context.
+- Verify logic is real, not stubbed.
+- Verify refactors change structure for real reasons.
+- Verify failures are visible, not swallowed.

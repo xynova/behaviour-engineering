@@ -1,2 +1,38 @@
+# Theme string (LoveIt): category line on singles and summaries.
+[includedInCategories]
+other = "Included in {{ .Categories }}"
+
 [summary]
 other = "Summary"
+
+[teaser]
+other = "Teaser"
+
+[context]
+other = "Context"
+
+[tldr]
+other = "TLDR"
+
+[labelGrounding]
+other = "Grounding"
+
+[labelResearch]
+other = "Research"
+
+# reality-protocols + type claims — sidebar labels (distinct from sayings TLDR / Context).
+[protocolClaim]
+other = "Claim"
+
+[protocolThoughts]
+other = "Thoughts"
+
+[protocolGrounding]
+other = "Grounding"
+
+[protocolDepth]
+other = "Dig deeper"
+
+# type: sayings — main markdown body when TLDR / Context / Teaser precede it (detail TOC).
+[sayingsArticle]
+other = "Article"

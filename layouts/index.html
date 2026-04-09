@@ -18,11 +18,11 @@
             </div>
         {{- end -}}
 
-        {{- /* Posts — card tiles: latest per content section (contentSections), or legacy type "posts" + paginate */ -}}
+        {{- /* Posts — card tiles: newest from contentSections (merged, capped at recentLimit), or legacy type "posts" + paginate */ -}}
         {{- if ne $posts.enable false | and .Site.RegularPages -}}
             {{- $secList := $posts.contentSections | default slice -}}
             {{- if gt (len $secList) 0 -}}
-                {{- $.Scratch.Set "homeFeed" slice -}}
+                {{- $homeFeed := slice -}}
                 {{- range $secList -}}
                     {{- $inSec := where site.RegularPages "Section" . -}}
                     {{- if $.Site.Params.page.hiddenFromHomePage -}}
@@ -30,12 +30,12 @@
                     {{- else -}}
                         {{- $inSec = where $inSec "Params.hiddenfromhomepage" "!=" true -}}
                     {{- end -}}
-                    {{- $sorted := sort $inSec "Date" "desc" -}}
-                    {{- with index $sorted 0 -}}
-                        {{- $.Scratch.Set "homeFeed" (($.Scratch.Get "homeFeed") | append .) -}}
-                    {{- end -}}
+                    {{- $homeFeed = union $homeFeed $inSec -}}
                 {{- end -}}
-                {{- $homePages := sort ($.Scratch.Get "homeFeed") "Date" "desc" -}}
+                {{- $sorted := sort $homeFeed "Date" "desc" -}}
+                {{- $limit := $posts.recentLimit | default 12 | int -}}
+                {{- if lt $limit 1 -}}{{- $limit = 12 -}}{{- end -}}
+                {{- $homePages := first $limit $sorted -}}
                 <div class="home-post-grid">
                     {{- range $homePages -}}
                         {{- .Render "home-tile" -}}

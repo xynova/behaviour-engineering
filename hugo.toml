@@ -112,8 +112,10 @@ enableEmoji = true
       enable = true
       # special amount of posts in each home posts page (legacy mode only; see contentSections)
       paginate = 6
-      # Latest one post per section on the home feed. List top-level content sections only;
-      # omit static pages (e.g. "about"). If empty or unset, home feed uses type "posts" only (legacy).
+      # Newest-first cap when using contentSections (merged across all listed sections).
+      recentLimit = 12
+      # Top-level sections whose pages are merged for the home feed (newest first, capped at recentLimit).
+      # Omit static pages (e.g. "about"). If empty or unset, home feed uses type "posts" only (legacy).
       contentSections = [
         "cognitive-memetics",
         "human-condition",

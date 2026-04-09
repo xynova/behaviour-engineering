@@ -20,7 +20,7 @@
             {{- with .Section -}}
                 <p class="home-post-tile__section">{{ . | humanize | replaceRE "-" " " }}</p>
             {{- end -}}
-            <h2 class="home-post-tile__title" itemprop="name headline">{{ .Title | emojify }}</h2>
+            <h2 class="home-post-tile__title" itemprop="name headline">{{- partial "heading-title-markup.html" . -}}</h2>
             {{- with .Site.Params.dateFormat | default "2006-01-02" | .PublishDate.Format -}}
                 <time class="home-post-tile__date" datetime="{{ $.PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ . }}</time>
             {{- end -}}
@@ -28,7 +28,7 @@
                 {{- with .Summary -}}
                     {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
                 {{- else -}}
-                    {{- .Description | safeHTML -}}
+                    {{- .Description | markdownify -}}
                 {{- end -}}
             </div>
             <div class="home-post-tile__footer">

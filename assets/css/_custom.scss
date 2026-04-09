@@ -6,6 +6,17 @@
 // Import Google Fonts or other web fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+// Anchor / inline link tokens — one hover accent everywhere we style prose links.
+// Hover matches LoveIt global `a:hover` / site footer accent (#2d96bd light, ice blue in dark).
+$link: #5b1273;
+$link-hover: #63a0b6;
+$link-underline: rgba(91, 18, 115, 0.45);
+$link-dark: #e8c4ff;
+$link-hover-dark: #bdebfc;
+// LoveIt default `a` rest color (matches surrounding footer line text).
+$footer-link: #161209;
+$footer-link-on-dark: #a9a9b3;
+
 h1, h2, h3, h4, h5, h6 {
     font-family: "Montserrat", sans-serif;
     font-weight: 500 !important;
@@ -13,12 +24,64 @@ h1, h2, h3, h4, h5, h6 {
     color:#2f0035 !important; 
 
     a {
-        color:#5b1273 ; 
+        color: $link;
+
+        &:hover,
+        &:focus-visible {
+            color: $link-hover;
+        }
+    }
+}
+
+// Same tokens as `.page.single .content a` / cards (dark theme).
+[theme=dark] :is(h1, h2, h3, h4, h5, h6) a {
+    color: $link-dark;
+
+    &:hover,
+    &:focus-visible {
+        color: $link-hover-dark;
+    }
+}
+
+// Site footer — same rest/hover pattern as LoveIt global `a` (neutral text, blue on hover only).
+footer a {
+    text-decoration: none;
+    color: $footer-link;
+
+    &::before,
+    &::after {
+        color: inherit;
     }
 
-    a:hover {
-        color: #ef3982  ; 
+    &:hover,
+    &:active,
+    &:focus-visible {
+        color: $link-hover;
     }
+}
+
+[theme=dark] footer a {
+    color: $footer-link-on-dark;
+
+    &::before,
+    &::after {
+        color: inherit;
+    }
+
+    &:hover,
+    &:active,
+    &:focus-visible {
+        color: $link-hover-dark;
+    }
+}
+
+// Single posts: cap width so images and line length don’t span the full `.container` (LoveIt default is very wide).
+.page.single {
+    max-width: 40rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
 
 .header-wrapper {
@@ -259,28 +322,28 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+// Home tile image: card width, height from aspect ratio (no fixed square / cover crop).
 .home-post-tile__media {
     position: relative;
     width: 100%;
-    padding-top: 56%;
     overflow: hidden;
+    flex-shrink: 0;
     background: $global-border-color;
 
     [theme=dark] & {
         background: $global-border-color-dark;
     }
 
+    img.lazyload,
+    img.lazyloaded,
     img {
-        position: absolute;
-        left: 0;
-        top: 0;
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
+        display: block;
     }
 
     &--placeholder {
-        padding-top: 40%;
+        min-height: 12rem;
         background: linear-gradient(
             135deg,
             rgba(216, 98, 229, 0.15) 0%,
@@ -330,6 +393,89 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+// Optional Params.heading_code (e.g. W6, W13). Default modifier matches TLDR / sayings labels.
+.heading-code {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+
+    .seven-list__title:hover &,
+    .seven-list__title:focus-visible & {
+        color: inherit;
+    }
+}
+
+// TLDR / sayings-label purple — clearly distinct from .seven-list__title and post titles.
+.heading-code--tldr {
+    color: #5b1273;
+
+    [theme=dark] & {
+        color: #e9c4f0;
+    }
+
+    .seven-list__title:hover &,
+    .seven-list__title:focus-visible & {
+        color: inherit;
+    }
+}
+
+.seven-list__title .heading-code--tldr {
+    color: #8c808e;
+
+    [theme=dark] & {
+        color: #f0c8ff;
+    }
+}
+
+.seven-list__title:hover .heading-code--tldr,
+.seven-list__title:focus-visible .heading-code--tldr {
+    color: inherit;
+}
+
+.heading-title-sep {
+    direction: ltr;
+    unicode-bidi: embed;
+    color: #aa95b2;
+
+    [theme=dark] & {
+        color: #c4b4d4;
+    }
+
+    .seven-list__title:hover &,
+    .seven-list__title:focus-visible & {
+        color: inherit;
+    }
+}
+
+// type cows / sayings + Params.project — single hero: week + project (big), then unique episode title.
+.single-title--series-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    line-height: 1.15;
+}
+
+.series-hero-line {
+    display: block;
+}
+
+.series-project-line {
+    font-weight: 800;
+    letter-spacing: -0.03rem;
+}
+
+.series-episode-line {
+    display: block;
+    font-size: clamp(1.1rem, 2.6vw, 1.55rem);
+    font-weight: 700;
+    letter-spacing: -0.02rem;
+    color: #3d1f48;
+
+    [theme=dark] & {
+        color: #e8d5ec;
+    }
+}
+
 .home-post-tile__date {
     font-size: 0.8rem;
     color: $global-font-secondary-color;
@@ -360,6 +506,32 @@ h1, h2, h3, h4, h5, h6 {
         font-size: inherit;
         font-weight: inherit;
         margin: 0;
+    }
+
+    strong {
+        font-weight: 700;
+    }
+
+    a {
+        color: $link;
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-color: $link-underline;
+        text-underline-offset: 2px;
+
+        &:hover {
+            color: $link-hover;
+            text-decoration-color: $link-hover;
+        }
+    }
+}
+
+[theme=dark] .home-post-tile__summary a {
+    color: $link-dark;
+
+    &:hover {
+        color: $link-hover-dark;
+        text-decoration-color: $link-hover-dark;
     }
 }
 
@@ -493,13 +665,37 @@ h1, h2, h3, h4, h5, h6 {
 
 .seven-list__type {
     text-transform: lowercase;
+
+    &.seven-list__categories {
+        text-transform: none;
+    }
+}
+
+.seven-list__category-link {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        color: $link-hover;
+        text-decoration: underline;
+
+        [theme=dark] & {
+            color: $link-hover-dark;
+        }
+    }
+}
+
+.seven-list__meta-sep {
+    opacity: 0.65;
+    padding: 0 0.05em;
 }
 
 .seven-list__title {
     font-size: clamp(1.35rem, 2.5vw, 2rem);
     font-weight: 700;
     line-height: 1.2;
-    color: #2f0035;
+    color: #4c2553;
     text-decoration: none;
     letter-spacing: -0.03rem;
 
@@ -507,19 +703,20 @@ h1, h2, h3, h4, h5, h6 {
         color: #e8d5ec;
     }
 
-    &:hover {
-        color: #5b1273;
+    &:hover,
+    &:focus-visible {
+        color: $link-hover;
 
         [theme=dark] & {
-            color: #ef3982;
+            color: $link-hover-dark;
         }
     }
 }
 
+// Section list (“seven” rows): full width; height follows the image aspect ratio (no crop box).
+// Home post tiles still use 1:1 in `.home-post-tile__media` above.
 .seven-list__figure {
     width: 100%;
-    min-height: 14rem;
-    max-height: 20rem;
     border-radius: 10px;
     overflow: hidden;
     background: $global-border-color;
@@ -530,16 +727,29 @@ h1, h2, h3, h4, h5, h6 {
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     }
 
+    .seven-list__figure-link {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+        border-radius: inherit;
+
+        &:focus-visible {
+            outline: 2px solid #d862e5;
+            outline-offset: 3px;
+        }
+    }
+
     img.lazyload,
     img.lazyloaded {
         width: 100%;
-        height: 15rem;
-        object-fit: cover;
+        height: auto;
         display: block;
     }
 
     .seven-list__figure-placeholder {
-        min-height: 14rem;
+        min-height: 12rem;
+        border-radius: 10px;
         background: linear-gradient(
             135deg,
             rgba(216, 98, 229, 0.12) 0%,
@@ -556,6 +766,61 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+// Claims single: tag pills directly under featured image (see layouts/claims/single.html)
+.post-tags-below-featured {
+    margin: 0.35rem 0 0.75rem;
+
+    .seven-list__tags {
+        margin-top: 0;
+    }
+}
+
+// Under list thumbnail: taxonomy tags (links to /tags/<term>/)
+.seven-list__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.45rem;
+    list-style: none;
+    margin: 0.65rem 0 0;
+    padding: 0;
+    align-items: center;
+}
+
+.seven-list__tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: $link;
+    background: rgba(91, 18, 115, 0.08);
+    border: 1px solid rgba(91, 18, 115, 0.2);
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+        color: $link-hover;
+        background: rgba(45, 150, 189, 0.1);
+        border-color: rgba(45, 150, 189, 0.35);
+    }
+
+    [theme=dark] & {
+        color: $link-dark;
+        background: rgba(232, 196, 255, 0.08);
+        border-color: rgba(232, 196, 255, 0.22);
+
+        &:hover,
+        &:focus-visible {
+            color: $link-hover-dark;
+            background: rgba(189, 235, 252, 0.08);
+            border-color: rgba(189, 235, 252, 0.35);
+        }
+    }
+}
+
 .seven-list__summary-col {
     display: none;
     flex: 1 1 14rem;
@@ -563,7 +828,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     justify-content: center;
     gap: 0.75rem;
-    padding: 0 0 0 1.25rem;
+    padding: 2rem 0 0 1.25rem;
     border-left: 1px solid $global-border-color;
 
     [theme=dark] & {
@@ -573,21 +838,90 @@ h1, h2, h3, h4, h5, h6 {
     @media (min-width: 768px) {
         display: flex;
     }
+
+    &--sayings {
+        gap: 1.25rem;
+    }
 }
 
-.seven-list__summary-heading {
+.seven-list__sayings-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+// Sayings labels (TLDR / Fluff): no underline — avoids looking like a hyperlink.
+.seven-list__sayings-label {
     margin: 0;
     font-size: 1.15rem;
     font-weight: 700;
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
-    text-underline-offset: 6px;
-    text-decoration-color: #d862e5;
-    color: #5b1273;
+    color: #73537e;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
 
     [theme=dark] & {
         color: #e8d5ec;
-        text-decoration-color: #a855c4;
+    }
+}
+
+.content .sayings-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #5b1273;
+    text-decoration: none;
+    border-bottom: none;
+    margin: 1.5rem 0 0.75rem;
+
+    [theme=dark] & {
+        color: #e8d5ec;
+    }
+
+    &:first-of-type {
+        margin-top: 0.5rem;
+    }
+}
+
+// Claims detail: TOC hierarchy — body headings (h3) nested under "Thoughts".
+.page.single #TableOfContents {
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    > ul > li {
+        margin: 0.35rem 0;
+    }
+
+    > ul > li > a {
+        font-weight: 600;
+    }
+
+    ul ul {
+        margin: 0.4rem 0 0.15rem 0;
+        padding: 0.25rem 0 0.25rem 0.75rem;
+        border-left: 2px solid rgba(99, 160, 182, 0.45);
+        list-style: none;
+
+        li {
+            margin: 0.28rem 0;
+        }
+
+        a {
+            font-size: 0.88em;
+            font-weight: 500;
+            line-height: 1.35;
+        }
+    }
+
+    [theme=dark] & ul ul {
+        border-left-color: rgba(189, 235, 252, 0.35);
     }
 }
 
@@ -606,6 +940,71 @@ h1, h2, h3, h4, h5, h6 {
 
     p {
         margin: 0;
+    }
+
+    &--md {
+        p {
+            margin: 0 0 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        strong {
+            font-weight: 700;
+        }
+    }
+
+    // Markdown links in Claim / Grounding / Teaser (otherwise inherit body black).
+    a {
+        color: $link;
+        font-weight: 600;
+        text-decoration: none;
+        text-decoration-color: $link-underline;
+        text-underline-offset: 3px;
+        border-bottom-style: dotted;
+        border-bottom-width: 1px;
+        border-bottom-color: $link-underline;
+
+        &:hover {
+            color: $link-hover;
+            text-decoration-color: $link-hover;
+            border-bottom-color: $link-hover;
+        }
+    }
+}
+
+[theme=dark] .seven-list__summary-text a {
+    color: $link-dark;
+
+    &:hover {
+        color: $link-hover-dark;
+        text-decoration-color: $link-hover-dark;
+        border-bottom-color: $link-hover-dark;
+    }
+}
+
+// Single post body: same affordance for links in claims / sayings blocks (markdown).
+.page.single .content a {
+    color: $link;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: $link-underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+        color: $link-hover;
+        text-decoration-color: $link-hover;
+    }
+}
+
+[theme=dark] .page.single .content a {
+    color: $link-dark;
+
+    &:hover {
+        color: $link-hover-dark;
+        text-decoration-color: $link-hover-dark;
     }
 }
 

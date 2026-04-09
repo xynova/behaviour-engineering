@@ -5,6 +5,10 @@
 #
 # Repository Pages setting must be: Build and deployment → Deploy from a branch → gh-pages / (root).
 # If you previously used "GitHub Actions" as the Pages source, switch to the branch above once this workflow is on the default branch.
+#
+# PR preview baseURL must use the same host as hugo.toml baseURL (custom domain). Project sites are served at the
+# domain root there, while *.github.io/<repo>/ includes an extra path segment — a github.io-only baseURL breaks CSS
+# and assets when opening previews at https://behaviorengineering.ai/pr-preview/pr-<n>/.
 name: Deploy Hugo site to Pages
 
 on:
@@ -23,6 +27,11 @@ on:
       - closed
   workflow_dispatch:
 
+# One in-flight run per PR (latest push wins). Production pushes do not cancel each other.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('{0}-pr-{1}', github.workflow, github.event.pull_request.number) || format('{0}-{1}', github.workflow, github.ref) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   HUGO_VERSION: "0.139.3"
   # Run JS-based actions on Node 24 (GitHub is deprecating Node 20 on runners; see GitHub changelog Sep 2025).
@@ -32,9 +41,6 @@ jobs:
   deploy:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    concurrency:
-      group: pages-production
-      cancel-in-progress: false
     permissions:
       contents: write
     environment:
@@ -63,15 +69,13 @@ jobs:
   preview:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    concurrency:
-      group: preview-${{ github.ref }}
-      cancel-in-progress: true
     permissions:
       contents: write
       pages: read
       pull-requests: write
     env:
-      PREVIEW_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}/
+      # Must match hugo.toml baseURL host; path is /pr-preview/pr-<n>/ on the custom domain (no /repo/ segment).
+      PREVIEW_BASE_URL: https://behaviorengineering.ai/pr-preview/pr-${{ github.event.number }}/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -92,6 +96,7 @@ jobs:
           source-dir: public
           preview-branch: gh-pages
           umbrella-dir: pr-preview
+          pages-base-url: https://behaviorengineering.ai
           action: auto
           # Requires `pages: read` on GITHUB_TOKEN; otherwise GET .../pages/builds returns an error object and the
           # action's jq wait step fails with "Cannot index string with string \"commit\"".

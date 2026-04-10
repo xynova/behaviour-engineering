@@ -133,6 +133,8 @@
 {{- if or (.Scratch.Get "this").mermaid $mermaidAllowed -}}
     {{- $source := $cdn.mermaidJS | default "lib/mermaid/mermaid.min.js" -}}
     {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
+    {{- /* After mermaid.min.js, before theme.js: patch render() to use textarea source when config.data is empty */ -}}
+    {{- dict "Source" "js/mermaid-render-fallback.js" "Minify" true "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
 {{- end -}}
 
 {{- /* ECharts */ -}}

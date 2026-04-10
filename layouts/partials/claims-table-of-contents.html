@@ -1,4 +1,3 @@
-{{- $isRP := eq .Section "reality-protocols" -}}
 {{- $hasClaim := or .Description .Summary -}}
 {{- $hasThoughts := ne (strings.TrimSpace .Content) "" -}}
 {{- $grounding := .Params.grounding | default .Params.paper -}}
@@ -9,7 +8,7 @@
 <nav id="TableOfContents">
   <ul>
     {{- if $hasClaim -}}
-      <li><a href="#section-claim">{{ if $isRP }}<span aria-hidden="true">🎯</span> {{ T "protocolClaim" }}{{ else }}<span aria-hidden="true">✔️</span> {{ T "tldr" }}{{ end }}</a></li>
+      <li><a href="#section-claim"><span aria-hidden="true">🎯</span> {{ T "protocolClaim" }}</a></li>
     {{- end -}}
     {{- if and $hasThoughts $hasBodyHeadings -}}
       <li>
@@ -28,10 +27,10 @@
       {{- end -}}
     {{- end -}}
     {{- if $hasGrounding -}}
-      <li><a href="#section-grounding">{{ if $isRP }}<span aria-hidden="true">📑</span> {{ T "protocolGrounding" }}{{ else }}<span aria-hidden="true">📄</span> {{ T "labelGrounding" }}{{ end }}</a></li>
+      <li><a href="#section-grounding"><span aria-hidden="true">📑</span> {{ T "protocolGrounding" }}</a></li>
     {{- end -}}
     {{- if $hasResearch -}}
-      <li><a href="#section-research">{{ if $isRP }}<span aria-hidden="true">🔭</span> {{ T "protocolDepth" }}{{ else }}<span aria-hidden="true">🔬</span> {{ T "labelResearch" }}{{ end }}</a></li>
+      <li><a href="#section-research"><span aria-hidden="true">🔭</span> {{ T "protocolDepth" }}</a></li>
     {{- end -}}
   </ul>
 </nav>

@@ -1,5 +1,6 @@
 {{- $p := .Page -}}
 {{- $params := $p.Params | merge $p.Site.Params.page -}}
+{{- $isClaims := eq $p.Type `claims` -}}
 {{- $image := $params.featuredimagepreview | default $params.featuredimage -}}
 {{- with $p.Resources.GetMatch "featured-image" -}}
     {{- $image = .RelPermalink -}}
@@ -46,6 +47,11 @@
                 <div class="seven-list__figure-placeholder" aria-hidden="true"></div>
             {{- end -}}
         </div>
+        {{- if and $isClaims $image $p.Params.image_credit -}}
+            <div class="seven-list__image-credit" role="note">
+                {{- dict "Content" ($p.Params.image_credit | markdownify) "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+            </div>
+        {{- end -}}
         {{- with $p.Params.tags -}}
             <ul class="seven-list__tags" aria-label="Tags">
                 {{- range . -}}
@@ -59,8 +65,6 @@
             </ul>
         {{- end -}}
     </div>
-    {{- $isClaims := eq $p.Type `claims` -}}
-    {{- $isRealityProtocols := eq $p.Section "reality-protocols" -}}
     {{- $grounding := $p.Params.grounding | default $p.Params.paper -}}
     {{- $asideBlocks := or (eq $p.Type `sayings`) $isClaims $p.Params.tldr $p.Params.fluff -}}
     <div class="seven-list__summary-col{{ if $asideBlocks }} seven-list__summary-col--sayings{{ end }}">
@@ -68,11 +72,7 @@
             {{- if or $p.Description $p.Summary -}}
                 <div class="seven-list__sayings-block">
                     <p class="seven-list__sayings-label">
-                        {{- if $isRealityProtocols -}}
-                            <span aria-hidden="true">🎯</span> {{ T "protocolClaim" }}
-                        {{- else -}}
-                            <span aria-hidden="true">✔️</span> {{ T "tldr" }}
-                        {{- end -}}
+                        <span aria-hidden="true">🎯</span> {{ T "protocolClaim" }}
                     </p>
                     <div class="seven-list__summary-text seven-list__summary-text--md">
                         {{- if $p.Description -}}
@@ -86,11 +86,7 @@
             {{- with $grounding -}}
                 <div class="seven-list__sayings-block">
                     <p class="seven-list__sayings-label">
-                        {{- if $isRealityProtocols -}}
-                            <span aria-hidden="true">📑</span> {{ T "protocolGrounding" }}
-                        {{- else -}}
-                            <span aria-hidden="true">📄</span> {{ T "labelGrounding" }}
-                        {{- end -}}
+                        <span aria-hidden="true">📑</span> {{ T "protocolGrounding" }}
                     </p>
                     <div class="seven-list__summary-text seven-list__summary-text--md">
                         {{ . | markdownify }}
@@ -100,11 +96,7 @@
             {{- with $p.Params.research -}}
                 <div class="seven-list__sayings-block">
                     <p class="seven-list__sayings-label">
-                        {{- if $isRealityProtocols -}}
-                            <span aria-hidden="true">🔭</span> {{ T "protocolDepth" }}
-                        {{- else -}}
-                            <span aria-hidden="true">🔬</span> {{ T "labelResearch" }}
-                        {{- end -}}
+                        <span aria-hidden="true">🔭</span> {{ T "protocolDepth" }}
                     </p>
                     <div class="seven-list__summary-text seven-list__summary-text--md">
                         {{ . | markdownify }}

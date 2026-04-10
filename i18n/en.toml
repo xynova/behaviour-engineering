@@ -20,7 +20,7 @@ other = "Grounding"
 [labelResearch]
 other = "Research"
 
-# reality-protocols + type claims — sidebar labels (distinct from sayings TLDR / Context).
+# type: claims — sidebar labels (distinct from sayings TLDR / Context).
 [protocolClaim]
 other = "Claim"
 

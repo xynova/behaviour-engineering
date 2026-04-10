@@ -126,8 +126,11 @@
     {{- $config = dict "strict" false "delimiters" $delimiters | dict "math" | merge $config -}}
 {{- end -}}
 
-{{- /* mermaid */ -}}
-{{- if (.Scratch.Get "this").mermaid -}}
+{{- /* mermaid — LoveIt only loads when scratch "mermaid" is set; that can miss pages where the hook ran but scratch was wrong. Also load when site/page code.render.mermaid is true (default). */ -}}
+{{- $code := $params.code | default dict -}}
+{{- $codeRender := $code.render | default dict -}}
+{{- $mermaidAllowed := $codeRender.mermaid | default true -}}
+{{- if or (.Scratch.Get "this").mermaid $mermaidAllowed -}}
     {{- $source := $cdn.mermaidJS | default "lib/mermaid/mermaid.min.js" -}}
     {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
 {{- end -}}
@@ -206,6 +209,11 @@
 
 {{- /* Theme script */ -}}
 {{- dict "Source" "js/theme.js" "Minify" true "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
+
+{{- /* Mermaid: larger vertical stack arrows only (site script; keep LoveIt submodule unmodified) */ -}}
+{{- if or (.Scratch.Get "this").mermaid $mermaidAllowed -}}
+    {{- dict "Source" "js/mermaid-stack-down.js" "Minify" true "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
+{{- end -}}
 
 {{- /* Glide.js for quote carousel - Load before scriptArr */ -}}
 {{- if (.Scratch.Get "this").glide -}}

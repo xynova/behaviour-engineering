@@ -84,6 +84,46 @@ footer a {
     box-sizing: border-box;
 }
 
+// Claims: optional `image_credit` (Markdown) in post meta (above hero image).
+.page.single .post-meta .featured-image-credit {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: rgba(47, 0, 53, 0.68);
+    margin-top: 0.15rem;
+
+    p {
+        margin: 0;
+    }
+
+    p + p {
+        margin-top: 0.3rem;
+    }
+
+    a {
+        color: $link;
+        text-decoration: underline;
+        text-decoration-color: $link-underline;
+
+        &:hover,
+        &:focus-visible {
+            color: $link-hover;
+        }
+    }
+
+    [theme=dark] & {
+        color: rgba(232, 196, 255, 0.78);
+
+        a {
+            color: $link-dark;
+
+            &:hover,
+            &:focus-visible {
+                color: $link-hover-dark;
+            }
+        }
+    }
+}
+
 .header-wrapper {
     background-color: #1d1321;
     
@@ -313,6 +353,22 @@ main .mermaid {
         height: auto;
         // Do not set font-size on all `svg text` at once: node vs edge labels need different scales.
 
+        // Subgraph cluster frames (row wrappers): keep layout, hide default box.
+        .cluster rect {
+            fill: transparent !important;
+            stroke: none !important;
+        }
+
+        .cluster .cluster-label {
+            display: none !important;
+        }
+
+        // Vertical stack edges only: class + marker set in theme.js (`mermaid-stack-down`).
+        path.mermaid-stack-down {
+            stroke-width: 5px !important;
+            stroke-linecap: round !important;
+        }
+
         // Node box text (primary)
         g.node text,
         g.node tspan,
@@ -327,6 +383,124 @@ main .mermaid {
         g.node .label foreignObject div {
             font-size: 14px !important;
             line-height: 1.3 !important;
+        }
+
+        // Node shapes: center label text (Mermaid foreignObject content often sits high without flex).
+        g.node .label foreignObject {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        g.node .label foreignObject > div {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            justify-items: center !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+            text-align: center !important;
+        }
+
+        g.node .label foreignObject p,
+        g.node .label foreignObject span {
+            margin: 0 !important;
+            width: 100%;
+            text-align: center !important;
+        }
+
+        // Vector text fallback (if a node uses <text> instead of foreignObject).
+        g.node .label text,
+        g.node .label tspan {
+            dominant-baseline: central;
+        }
+
+        // Text-note nodes only: flowchart lines like `A1["…"]:::pastelNote` — unfilled rect, L/R dotted
+        // rails, white copy. Match `g.pastelNote` and `g.node.pastelNote` (class order varies by Mermaid).
+        // `classDef pastelNote` should use fill:transparent in the diagram so inline SVG styles do not
+        // paint a solid box; CSS finishes HTML label layers inside foreignObject.
+        $mermaid-note-fg: #ffffff;
+
+        g.pastelNote rect,
+        g.pastelNote polygon,
+        g.pastelNote path,
+        g.node.pastelNote rect,
+        g.node.pastelNote polygon,
+        g.node.pastelNote path,
+        g[class~="pastelNote"] rect,
+        g[class~="pastelNote"] polygon,
+        g[class~="pastelNote"] path {
+            fill: transparent !important;
+            stroke: none !important;
+        }
+
+        g.pastelNote .label foreignObject,
+        g.node.pastelNote .label foreignObject,
+        g[class~="pastelNote"] .label foreignObject {
+            border-left: 1.5px dotted $mermaid-note-fg !important;
+            border-right: 1.5px dotted $mermaid-note-fg !important;
+            border-top: none !important;
+            border-bottom: none !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            color: $mermaid-note-fg !important;
+            box-sizing: border-box !important;
+            padding-left: 0.65em !important;
+            padding-right: 0.65em !important;
+            // Left-justify so two-line “clause; clause” captions share one vertical axis (Mermaid cannot place nodes by pixel).
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+        }
+
+        g.pastelNote .label foreignObject .labelBkg,
+        g.node.pastelNote .label foreignObject .labelBkg,
+        g[class~="pastelNote"] .label foreignObject .labelBkg {
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            color: $mermaid-note-fg !important;
+        }
+
+        g.pastelNote .label foreignObject > div,
+        g.node.pastelNote .label foreignObject > div,
+        g[class~="pastelNote"] .label foreignObject > div {
+            background: transparent !important;
+            background-color: transparent !important;
+            justify-content: flex-start !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+        }
+
+        g.pastelNote .label foreignObject p,
+        g.pastelNote .label foreignObject span,
+        g.pastelNote .label foreignObject div,
+        g.node.pastelNote .label foreignObject p,
+        g.node.pastelNote .label foreignObject span,
+        g.node.pastelNote .label foreignObject div,
+        g[class~="pastelNote"] .label foreignObject p,
+        g[class~="pastelNote"] .label foreignObject span,
+        g[class~="pastelNote"] .label foreignObject div {
+            color: $mermaid-note-fg !important;
+            text-align: left !important;
+        }
+
+        g.pastelNote .label text,
+        g.pastelNote .label tspan,
+        g.pastelNote text,
+        g.pastelNote tspan,
+        g.node.pastelNote .label text,
+        g.node.pastelNote .label tspan,
+        g.node.pastelNote text,
+        g.node.pastelNote tspan,
+        g[class~="pastelNote"] .label text,
+        g[class~="pastelNote"] .label tspan,
+        g[class~="pastelNote"] text,
+        g[class~="pastelNote"] tspan {
+            fill: $mermaid-note-fg !important;
         }
 
         // Edge / arrow labels (slightly smaller than nodes, still readable)
@@ -978,6 +1152,46 @@ main .mermaid {
                 rgba(216, 98, 229, 0.1) 0%,
                 rgba(0, 0, 0, 0.2) 100%
             );
+        }
+    }
+}
+
+// Section list: optional `image_credit` (claims) under thumbnail, before tags.
+.seven-list__image-credit {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: rgba(47, 0, 53, 0.65);
+    margin: 0.25rem 0 0.15rem;
+
+    p {
+        margin: 0;
+    }
+
+    p + p {
+        margin-top: 0.25rem;
+    }
+
+    a {
+        color: $link;
+        text-decoration: underline;
+        text-decoration-color: $link-underline;
+
+        &:hover,
+        &:focus-visible {
+            color: $link-hover;
+        }
+    }
+
+    [theme=dark] & {
+        color: rgba(232, 196, 255, 0.75);
+
+        a {
+            color: $link-dark;
+
+            &:hover,
+            &:focus-visible {
+                color: $link-hover-dark;
+            }
         }
     }
 }

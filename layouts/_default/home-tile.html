@@ -6,7 +6,6 @@
 {{- with .Resources.GetMatch "featured-image-preview" -}}
     {{- $image = .RelPermalink -}}
 {{- end -}}
-{{- $author := $params.author | default .Site.Params.Author.name | default (T "author") -}}
 <article class="home-post-tile" itemscope itemtype="http://schema.org/Article">
     <a class="home-post-tile__card" href="{{ .RelPermalink }}">
         {{- with $image -}}
@@ -21,21 +20,22 @@
                 <p class="home-post-tile__section">{{ . | humanize | replaceRE "-" " " }}</p>
             {{- end -}}
             <h2 class="home-post-tile__title" itemprop="name headline">{{- partial "heading-title-markup.html" . -}}</h2>
-            {{- with .Site.Params.dateFormat | default "2006-01-02" | .PublishDate.Format -}}
-                <time class="home-post-tile__date" datetime="{{ $.PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ . }}</time>
-            {{- end -}}
             <div class="home-post-tile__summary">
-                {{- with .Summary -}}
-                    {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
+                {{- $desc := .Description | strings.TrimSpace -}}
+                {{- $cardHTML := "" -}}
+                {{- if $desc -}}
+                    {{- $cardHTML = $desc | markdownify -}}
                 {{- else -}}
-                    {{- .Description | markdownify -}}
+                    {{- $cardHTML = .Summary -}}
+                {{- end -}}
+                {{- with $cardHTML -}}
+                    {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
                 {{- end -}}
             </div>
             <div class="home-post-tile__footer">
-                <span class="home-post-tile__author">
-                    <i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>
-                    {{- $author -}}
-                </span>
+                {{- with .Site.Params.dateFormat | default "2006-01-02" | .PublishDate.Format -}}
+                    <time class="home-post-tile__date" datetime="{{ $.PublishDate.Format "2006-01-02T15:04:05Z07:00" }}" itemprop="datePublished">{{ . }}</time>
+                {{- end -}}
                 <span class="home-post-tile__reading-time">
                     <i class="far fa-clock fa-fw" aria-hidden="true"></i>
                     {{- T "readingTime" .ReadingTime -}}

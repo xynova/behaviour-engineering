@@ -626,20 +626,28 @@ main .mermaid {
 
 // Glide.js Quote Carousel
 .quote-carousel {
-    
-    
     ul {
         list-style: none !important;
         padding: 0 !important;
         margin: 0 !important;
     }
 
- 
-    // Ensure quotes are properly styled within slides
+    // Track clips to active slide height (set in glide-init); overflow hides taller off-screen slides
+    .glide__track {
+        overflow: hidden;
+    }
+
+    // Slides use their own content height; JS sets .glide__track height to the active slide
+    .glide__slides {
+        align-items: flex-start;
+    }
+
     .principal-quote {
         margin: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
-    
+
     // Hide default Glide arrows and bullets (optional - customize as needed)
     .glide__arrows,
     .glide__bullets {
@@ -866,19 +874,26 @@ main .mermaid {
     }
 }
 
+// Card blurb + meta: darker than $global-font-secondary-* for contrast on tile backgrounds
+$home-tile-summary-color: #3a3340;
+$home-tile-meta-color: #524a58;
+$home-tile-summary-color-dark: #e4dbea;
+$home-tile-meta-color-dark: #c4b8cc;
+
 .home-post-tile__date {
+    min-width: 0;
     font-size: 0.8rem;
-    color: $global-font-secondary-color;
+    color: $home-tile-meta-color;
 
     [theme=dark] & {
-        color: $global-font-secondary-color-dark;
+        color: $home-tile-meta-color-dark;
     }
 }
 
 .home-post-tile__summary {
     font-size: 0.9rem;
     line-height: 1.45;
-    color: $global-font-secondary-color;
+    color: $home-tile-summary-color;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -887,7 +902,7 @@ main .mermaid {
     margin-top: 0.15rem;
 
     [theme=dark] & {
-        color: $global-font-secondary-color-dark;
+        color: $home-tile-summary-color-dark;
     }
 
     p,
@@ -934,19 +949,12 @@ main .mermaid {
     padding-top: 0.65rem;
     border-top: 1px solid $global-border-color;
     font-size: 0.8rem;
-    color: $global-font-secondary-color;
+    color: $home-tile-meta-color;
 
     [theme=dark] & {
         border-top-color: $global-border-color-dark;
-        color: $global-font-secondary-color-dark;
+        color: $home-tile-meta-color-dark;
     }
-}
-
-.home-post-tile__author {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .home-post-tile__reading-time {
@@ -1323,6 +1331,74 @@ main .mermaid {
     max-width: 30rem;
     margin-left: auto;
     margin-right: auto;
+}
+
+// Cube-cows + sayings: project explainer after article body (cow / sayings detail pages).
+.cow-project-about,
+.sayings-project-about {
+    margin-top: 2rem;
+    padding: 1.25rem 1.1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(91, 18, 115, 0.18);
+    background: rgba(216, 98, 229, 0.06);
+
+    [theme=dark] & {
+        border-color: rgba(232, 213, 236, 0.2);
+        background: rgba(216, 98, 229, 0.08);
+    }
+}
+
+.cow-project-about__title,
+.sayings-project-about__title {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #5b1273;
+
+    [theme=dark] & {
+        color: #e8d5ec;
+    }
+}
+
+.cow-project-about__mark,
+.sayings-project-about__mark {
+    font-weight: 400;
+    line-height: 1;
+}
+
+.cow-project-about__body,
+.sayings-project-about__body {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #3a3340;
+
+    [theme=dark] & {
+        color: #e4dbea;
+    }
+
+    p {
+        margin: 0 0 0.85rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    em {
+        font-style: italic;
+        font-weight: 600;
+    }
+}
+
+.sayings-project-about__endmark {
+    opacity: 0.9;
+    white-space: nowrap;
 }
 
 // Claims detail: TOC hierarchy — body headings (h3) nested under "Thoughts".

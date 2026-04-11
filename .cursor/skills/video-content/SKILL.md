@@ -15,14 +15,19 @@ description: >-
 
 **Video** posts highlight **worth-watching YouTube videos**: a short pitch, the embed, and **body copy** with your take (why it matters, how it connects, caveats).
 
-**UI (this repo):** `layouts/video/single.html` renders **title** → **subtitle** (optional) → **meta** → **featured image** only if there is **no** `youtube_id` → **tags** → optional **TOC** → **`description`** / optional **`sowhat`** as **lead** blocks (markdownified) → **embed** (when `youtube_id` set) → **body**. Section **list** rows (`layouts/partials/seven-style-row.html`) show the same **YouTube** embed as thumbnails plus a short **Read the article** pill link under the player (`i18n` key **`fullPost`**; the iframe is not a link to the single).
+**UI (this repo):** `layouts/video/single.html` renders **title** → **subtitle** (optional) → **meta** → **featured image** only if there is **no** `youtube_id` → **tags** → optional **TOC** → **lead** (see below) → **embed** (when `youtube_id` set) → **body**.
+
+**Lead on the single (order):** If **`sowhat`** is set, **`description`** is shown under the fixed heading **“What you probably do not know yet”** (🎬), then **`sowhat`** under **“What you will have after”** (🎯). If **`sowhat`** is omitted, **`description`** has no extra heading above it. Both fields are markdownified.
+
+**Section list rows** (`layouts/partials/seven-style-row.html`): **Left column** — same **YouTube** embed as on the single (not a still), then a pill link to the post using **`{{ T "fullPost" }}`** (English string in **`i18n/en.toml`**, e.g. “Read the article”; the iframe is not a link to the single). **Right column** — same **`description`** / optional **`sowhat`** copy as on the single, with the same **“What you probably do not know yet”** / **“What you will have after”** labels (fixed in the partial). Styling hooks: **`assets/css/_custom.scss`** (`.seven-list__figure--video`, `.seven-list__video-embed`, `.seven-list__video-detail-link`).
 
 ## Field roles
 
 | Field | Role |
 |-------|------|
 | **`type`** | Must be **`video`**. |
-| **`description`** | **Lead** above the player: why the reader should watch (one tight paragraph or a few lines). Shown on the **single** page before the embed; also feeds **list/summary** views like other posts. |
+| **`description`** | **Lead** above the player: why the reader should watch (one tight paragraph, bullets, or a few lines). On the **single**, shown before the embed; with **`sowhat`**, it appears under **“What you probably do not know yet.”** Also drives the **list row** aside. |
+| **`sowhat`** | Optional **payoff** after the teaser: one short paragraph on what the viewer gains (overarching value). Rendered after **`description`** on single and list; when set, the single adds the **“What you will have after”** heading above **`description`** is paired with **“What you probably do not know yet.”** Use with **`description`** for the split teaser/payoff pattern. |
 | **`youtube_id`** | The id from `https://www.youtube.com/watch?v=THIS` (or the `v=` value in a short URL). The layout injects Hugo’s **`youtube`** shortcode into **`.video-page__embed`**. Alias front matter key **`youtube`** is accepted. |
 | **Body** | Commentary **below** the embed: reaction, context, links, headings. Use normal Markdown. |
 | **`subtitle`** | Optional second line under the title. |

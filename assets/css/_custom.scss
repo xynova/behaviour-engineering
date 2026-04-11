@@ -686,7 +686,8 @@ main .mermaid {
     min-width: 0;
 }
 
-.home-post-tile__card {
+.home-post-tile__card,
+.home-post-tile__card--video {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -713,6 +714,26 @@ main .mermaid {
         [theme=dark] & {
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
+    }
+}
+
+// Video tile: iframe cannot sit inside `<a>`; body links to the single.
+.home-post-tile__text-hit {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+
+    &:focus-visible {
+        outline: 2px solid $link;
+        outline-offset: 2px;
+    }
+
+    [theme=dark] &:focus-visible {
+        outline-color: $link-dark;
     }
 }
 
@@ -750,6 +771,18 @@ main .mermaid {
                 rgba($brand-purple, 0.12) 0%,
                 rgba(0, 0, 0, 0.2) 100%
             );
+        }
+    }
+
+    &--video {
+        background: #0a0a0a;
+
+        // Hugo’s `youtube` shortcode wraps the iframe in a padding-bottom ratio box; keep that intact.
+        .home-post-tile__video-embed {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
         }
     }
 }
@@ -886,14 +919,12 @@ $home-tile-meta-color-dark: #c4b8cc;
     }
 }
 
+// Prose cards: line-clamp gives a clean ellipsis. List cards: `-webkit-box` breaks `ul`/`li` (stacked bullets);
+// use `:has(> ul|ol)` so lists get block layout, capped bullets, and a bottom fade instead of a hard mid-line cut.
 .home-post-tile__summary {
     font-size: 0.9rem;
     line-height: 1.45;
     color: $home-tile-summary-color;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
     flex: 1;
     margin-top: 0.15rem;
 
@@ -901,12 +932,65 @@ $home-tile-meta-color-dark: #c4b8cc;
         color: $home-tile-summary-color-dark;
     }
 
-    p,
-    h1, h2, h3, h4, h5, h6 {
-        display: inline;
+    // Default: paragraph / bold-only blurbs (matches most tiles; restores ellipsis).
+    &:not(:has(> ul)):not(:has(> ol)) {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        overflow: hidden;
+
+        p,
+        h1, h2, h3, h4, h5, h6 {
+            display: inline;
+            font-size: inherit;
+            font-weight: inherit;
+            margin: 0;
+        }
+    }
+
+    // Markdown bullet lists in `description` (e.g. video picks): block layout, cap height, fade (no hard mid-line cut).
+    &:is(:has(> ul), :has(> ol)) {
+        display: block;
+        overflow: hidden;
+        max-height: calc(1.45em * 10);
+        mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+
+        ul,
+        ol {
+            margin: 0;
+            padding-left: 1.15em;
+        }
+
+        li {
+            display: list-item;
+            margin: 0.12em 0;
+        }
+
+        // Keep up to four hooks on the card; drop extras so the block does not overflow other tiles.
+        li:nth-child(n + 5) {
+            display: none;
+        }
+    }
+
+    p {
         font-size: inherit;
         font-weight: inherit;
-        margin: 0;
+    }
+
+    &:is(:has(> ul), :has(> ol)) p {
+        margin: 0 0 0.35em;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-size: inherit;
+        font-weight: 600;
+        margin: 0 0 0.25em;
     }
 
     strong {
@@ -925,6 +1009,33 @@ $home-tile-meta-color-dark: #c4b8cc;
             text-decoration-color: $link-hover;
         }
     }
+}
+
+.home-post-tile__video-cta {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.35rem;
+    margin-top: 0.45rem;
+    padding: 0.32rem 0.72rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $link;
+    border-radius: 999px;
+    border: 1px solid rgba(91, 18, 115, 0.28);
+    background: rgba(91, 18, 115, 0.07);
+
+    [theme=dark] & {
+        color: $link-dark;
+        border-color: rgba(232, 196, 255, 0.28);
+        background: rgba(232, 196, 255, 0.08);
+    }
+}
+
+.home-post-tile__video-cta__icon {
+    font-size: 1em;
+    line-height: 1;
 }
 
 [theme=dark] .home-post-tile__summary a {

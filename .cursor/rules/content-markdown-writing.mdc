@@ -30,6 +30,11 @@ alwaysApply: false
 
 - MUST follow `.cursor/skills/cognitive-memetics-content/SKILL.md` for **umbrella + project** `categories` (shareable `/categories/...` hubs), cube-cows vs sayings fields, and **Street Wisdom** tags (including LinkedIn hashtag mapping).
 
+## Front matter when `type: video`
+
+- MUST treat `description` as the **lead** above the embed: it must read well alone in list and card views.
+- MUST follow `.cursor/skills/video-content/SKILL.md` for **`youtube_id`** vs body shortcode, **`categories`** (often Mind-Infrastructure or Human-Condition), tags, optional featured image, and **compressed pitch** when trimming long notes to a short page.
+
 ## Body
 
 - MAY use second person for stakes or direct address. MUST NOT turn most paragraphs into imperative lists or manuals.

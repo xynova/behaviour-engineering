@@ -141,7 +141,6 @@ footer a {
         // }
     }
 
-
     // Style the "behaviour" part (in pre field)
     .header-title-pre {
         font-weight: 700; // or whatever weight you want
@@ -164,24 +163,23 @@ footer a {
             min-width: 0;
         }
 
+        // Inline SVG (`layouts/partials/header-logo.html`): paths use fill="currentColor".
         .logo {
-            // Fixed bounding box size
             width: 1.7em !important;
             height: 2em !important;
             box-sizing: border-box;
-            // Bounding box styling
-            
-            padding: 0 !important;  // Padding creates the inner space for the SVG
+            padding: 0 !important;
             margin: 0 !important;
-        
-            // Make SVG scale to fill the inner box (padding area)
-            object-fit: contain;  // SVG scales to fit inside padding area
-            object-position: center;
-            
-            // Alignment
             vertical-align: middle;
-        
             display: inline-block;
+            flex-shrink: 0;
+            color: $brand-purple;
+            overflow: visible;
+
+            // Match wordmark; paths inherit via currentColor.
+            path {
+                fill: currentColor;
+            }
         }
     }
 

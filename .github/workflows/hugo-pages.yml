@@ -96,7 +96,9 @@ jobs:
           source-dir: public
           preview-branch: gh-pages
           umbrella-dir: pr-preview
-          pages-base-url: https://behaviorengineering.ai
+          # Host only — pr-preview-action prepends https:// (see lib/main.sh: preview_url=https://$pages_base_url/...).
+          # Using https:// here produced https://https://behaviorengineering.ai/... in the PR comment.
+          pages-base-url: behaviorengineering.ai
           action: auto
           # Requires `pages: read` on GITHUB_TOKEN; otherwise GET .../pages/builds returns an error object and the
           # action's jq wait step fails with "Cannot index string with string \"commit\"".

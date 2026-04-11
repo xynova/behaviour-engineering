@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reality-Protocols on behaviorengineering.ai</title><link>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/</link><description>Recent content in Reality-Protocols on behaviorengineering.ai</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 03 Apr 2026 08:00:00 +1100</lastBuildDate><atom:link href="https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/index.xml" rel="self" type="application/rss+xml"/><item><title>How meanings sync 🔄</title><link>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/2026-04-03-shared-reality/</link><pubDate>Fri, 03 Apr 2026 08:00:00 +1100</pubDate><guid>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/2026-04-03-shared-reality/</guid><description>&lt;h3 id="how-alignment-stacks">How alignment stacks&lt;/h3>
+&lt;textarea id="id-1-mermaid-src" class="mermaid-source" hidden readonly>flowchart TB
+ classDef pastelLavender fill:#e8d4ef,stroke:#b894c9,color:#1c1422,stroke-width:2px
+ classDef pastelSky fill:#cfe8f6,stroke:#7eb3d4,color:#1c1422,stroke-width:3px
+ classDef pastelMint fill:#d4f0e2,stroke:#7fbf9a,color:#1c1422,stroke-width:4px
+ classDef pastelApricot fill:#fde6d4,stroke:#e0a882,color:#1c1422,stroke-width:5px,margin:10em;
+ A(&amp;#34;Shared feelings&amp;#34;):::pastelLavender -.-&amp;gt;|leads to| B(&amp;#34;Shared practices&amp;#34;):::pastelSky
+ B -.-&amp;gt;|leads to| C(&amp;#34;Shared coordination&amp;#34;):::pastelMint
+ C -.-&amp;gt;|leads to| D((&amp;#34;Shared identity ✅&amp;#34;)):::pastelApricot&lt;/textarea>
+&lt;div class="mermaid" id="id-1">&lt;/div>&lt;h3 id="language-as-zip">Language as zip&lt;/h3>
+&lt;p>Language is what happens when you zip a whole mental universe into one thin line of text. Someone else unzips it with a different brain and never gets your exact state, only their reconstruction.&lt;/p></description></item><item><title>MEMEs, as virtual agents</title><link>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/2026-04-01-memes/</link><pubDate>Wed, 01 Apr 2026 08:00:00 +1100</pubDate><guid>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/2026-04-01-memes/</guid><description>&lt;h3 id="coinage">Coinage&lt;/h3>
+&lt;p>The same coinage: evolutionary biologist Richard Dawkins in &lt;em>The Selfish Gene&lt;/em> (&lt;strong>1976&lt;/strong>) built &lt;strong>meme&lt;/strong> from Greek &lt;em>mimema&lt;/em> (“that which is imitated”) and shortened it to rhyme with &lt;em>gene&lt;/em>, stressing memes as &lt;strong>cultural analogues of genes&lt;/strong>.&lt;/p>
+&lt;h3 id="what-they-become">What they become&lt;/h3>
+&lt;p>Religions, ideologies, social hierarchies, and shared fictions like money or nation‑states work this way. Once they take root, they guide behavior, attract followers, punish dissent, and defend against criticism.&lt;/p>
+&lt;h3 id="old-hardware">Old hardware&lt;/h3>
+&lt;p>At a basic level, memes connect to ancient brain circuits like the amygdala and basal ganglia. They trigger fear, belonging, reward, novelty, or identity so defending or sharing them feels meaningful or urgent.&lt;/p></description></item></channel></rss>

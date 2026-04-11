@@ -1,0 +1,11 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>DoYouHaveATribe - Tag - behaviorengineering.ai</title><link>https://behaviorengineering.ai/pr-preview/pr-11/tags/doyouhaveatribe/</link><description>DoYouHaveATribe - Tag - behaviorengineering.ai</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 03 Apr 2026 08:00:00 +1100</lastBuildDate><atom:link href="https://behaviorengineering.ai/pr-preview/pr-11/tags/doyouhaveatribe/" rel="self" type="application/rss+xml"/><item><title>How meanings sync 🔄</title><link>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/2026-04-03-shared-reality/</link><pubDate>Fri, 03 Apr 2026 08:00:00 +1100</pubDate><author>xynova</author><guid>https://behaviorengineering.ai/pr-preview/pr-11/reality-protocols/2026-04-03-shared-reality/</guid><description><![CDATA[<h3 id="how-alignment-stacks">How alignment stacks</h3>
+<textarea id="id-1-mermaid-src" class="mermaid-source" hidden readonly>flowchart TB
+    classDef pastelLavender fill:#e8d4ef,stroke:#b894c9,color:#1c1422,stroke-width:2px
+    classDef pastelSky fill:#cfe8f6,stroke:#7eb3d4,color:#1c1422,stroke-width:3px
+    classDef pastelMint fill:#d4f0e2,stroke:#7fbf9a,color:#1c1422,stroke-width:4px
+    classDef pastelApricot fill:#fde6d4,stroke:#e0a882,color:#1c1422,stroke-width:5px,margin:10em;
+    A(&#34;Shared feelings&#34;):::pastelLavender -.-&gt;|leads to| B(&#34;Shared practices&#34;):::pastelSky
+    B -.-&gt;|leads to| C(&#34;Shared coordination&#34;):::pastelMint
+    C -.-&gt;|leads to| D((&#34;Shared identity ✅&#34;)):::pastelApricot</textarea>
+<div class="mermaid" id="id-1"></div><h3 id="language-as-zip">Language as zip</h3>
+<p>Language is what happens when you zip a whole mental universe into one thin line of text. Someone else unzips it with a different brain and never gets your exact state, only their reconstruction.</p>]]></description></item></channel></rss>
